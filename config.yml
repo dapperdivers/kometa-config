@@ -1,0 +1,270 @@
+libraries: # This is called out once within the config.yml file
+  4k-Movies: &movie_config
+    settings: &kometa_settings
+      asset_directory: /assets/4k-Movies
+      prioritize_assets: true
+    run_order: &run_order
+    - collections
+    - metadata
+    - operations
+    - overlays
+    template_variables:
+      sep_style: gray # use the gray separators globally for this library
+      collection_mode: show # hide the collections
+      language: en # could be default(which is en), da, de, fr, pt-br or another lang code that we have translated
+      placeholder_imdb_id: tt8579674 # 1917 (2019) placeholder id for the separators
+    collection_files: # These files contain collections: and/or dynamic_collections attribute
+    - file: /config/custom/movie_subgenre.yml
+    - default: collectionless   # Collectionless collection to help Show/Hide Movies/Shows properly in your library
+    overlay_files: &movie_overlays
+    - file: /config/overlays/media_info.yml
+      template_variables:
+        use_gradient_top: false
+        use_gradient_bottom: false
+    - file: /config/overlays/audience_rating.yml
+    - default: mediastinger
+      template_variables:
+        vertical_offset: 50
+    - default: runtimes
+      template_variables:
+        vertical_offset: 37
+        horizontal_align: center
+        horizontal_offset: 140
+        text: ''
+        back_width: 205
+        back_color: '#00000000'
+    - remove_overlays: false
+    operations:
+    - &id001
+      schedule: daily
+      split_duplicates: false   # Splits all duplicate movies/shows found in this library
+      assets_for_all: true   # Search in assets for images for every item in your library
+      delete_collections:
+        configured: false   # False - Collection must be an Unconfigured Collection to be deleted (collection is not in the config file of the specific Kometa run).
+        managed: false   # False - Collection must be an Unmanaged Collection to be deleted (the collection does not have the Kometa label)
+        less: 99999   # Effectively all collections regardless of the number of items in the collection
+    - &id002
+      schedule: Weekly (monday)
+      mass_user_rating_update: mdb_tomatoes
+    - &id003
+      schedule: Weekly (tuesday)
+      mass_critic_rating_update: imdb
+    - &id004
+      schedule: Weekly (wednesday)
+      mass_audience_rating_update: tmdb
+    - &id005
+      schedule: yearly(01/01)
+      mass_genre_update:
+      - tmdb     # Update all genres from tmdb
+      - imdb     # Update all genres from imdb if not from tmdb
+      - tvdb     # Update all genres from tvdb if not from imdb
+    - &id006
+      schedule: Weekly (friday)
+      mass_content_rating_update:
+      - mdb_commonsense     # Changes Content Rating to "1", "2" etc. to specify appropriate age
+      - omdb     # Changes Content Rating from omdb if not found on mdb_commonsense
+    - &id007
+      schedule: Weekly (saturday)
+      mass_studio_update:
+      - tmdb
+      - tvdb
+      - omdb     # Update all studios from tmdb
+    - &id008
+      schedule: Weekly (sunday)
+      mass_originally_available_update:
+      - tmdb     # Update all original available date from tmdb
+      - tvdb     # Update all original available date from tvdb if not from tmdb
+      - omdb     # Update all original available date from omdb(imdb) if not from tvdb
+    minimum_items: &minimum_items 1
+    radarr: &radarr
+      url: http://radarr-uhd.media
+      token: <<RADARR_UHD_API_KEY>>
+      add_missing: false
+      add_existing: true
+      root_folder_path: "/media/baby_plex/movies-4k"
+      monitor: true
+      monitor_existing: true
+      ignore_cache: false
+      availability: announced
+      quality_profile: UHD Bluray + WEB
+      tag:
+      search: false
+      radarr_path:
+      plex_path:
+      upgrade_existing: false
+  Movies:
+    <<: *movie_config
+    settings:
+      <<: *kometa_settings
+      asset_directory: /assets/Movies
+    radarr:
+      <<: *radarr
+      url: http://radarr.media
+      token: <<RADARR_API_KEY>>
+      root_folder_path: "/media/baby_plex/Movies"
+      quality_profile: HD Bluray + WEB
+  4k-TV Shows: &tv_config
+    settings:
+      <<: *kometa_settings
+      asset_directory: /assets/4k-TV Shows
+    run_order: *run_order
+    template_variables:
+      sep_style: gray # use the gray separators globally for this library
+      collection_mode: show # hide the collections
+      language: en # could be default(which is en), da, de, fr, pt-br or another lang code that we have translated
+      placeholder_imdb_id: tt1190634 # The Boys (2019) placeholder id for the separators
+    collection_files: # These files contain collections: and/or dynamic_collections attributes
+    - default: based   # collections based on a book, comic, story, video game
+    - default: collectionless   # Collectionless collection to help Show/Hide Movies/Shows properly in your library
+    overlay_files:
+    - file: /config/overlays/media_info.yml
+      template_variables:
+        use_gradient_top: false
+        use_gradient_bottom: false
+    - file: /config/overlays/audience_rating.yml
+    - default: status
+      template_variables:
+        horizontal_align: center
+        vertical_align: Top
+        vertical_offset: 23
+        horizontal_offset: 0
+        back_height: 149
+        back_width: 965
+        font: /config/overlays/fonts/Colus-Regular.ttf
+        font_size: 60
+        font_color_airing: '#27C24C'
+        font_color_returning: '#FFA500'
+        font_color_canceled: '#ED1F1F'
+        font_color_ended: '#FF0000'
+        back_color: '#00000000'
+    - default: runtimes
+      template_variables:
+        builder_level: episode
+        horizontal_align: right
+        back_color: '#00000000'
+        back_height: 80
+        vertical_offset: 20
+        horizontal_offset: 18
+        text: ''
+        back_width: 205
+    - remove_overlays: false
+    minimum_items: *minimum_items
+    operations:
+      <<: [*id001, *id002, *id003, *id004, *id005, *id006, *id007, *id008]
+    sonarr: &sonarr
+      url: http://sonarr-uhd.media
+      token: <<SONARR_UHD_API_KEY>>
+      add_missing: false
+      add_existing: true
+      root_folder_path: "/media/baby_plex/tv-4k"
+      monitor: all
+      quality_profile: WEB-2160p
+      language_profile: English
+      series_type: standard
+      season_folder: true
+      tag:
+      search: false
+      cutoff_search: false
+      sonarr_path:
+      plex_path:
+      upgrade_existing: false
+  TV Shows:
+    <<: *tv_config
+    settings:
+      <<: *kometa_settings
+      asset_directory: /assets/TV Shows
+    sonarr:
+      <<: *sonarr
+      url: http://sonarr.media
+      token: <<SONARR_API_KEY>>
+      root_folder_path: "/media/baby_plex/Shows"
+      quality_profile: WEB-1080p
+
+settings:
+  cache: true
+  cache_expiration: 60
+  asset_directory: /assets
+  asset_folders: true
+  create_asset_folders: true
+  asset_depth: 0
+  prioritize_assets: false
+  dimensional_asset_rename: false
+  download_url_assets: true
+  show_missing_season_assets: false
+  show_missing_episode_assets: false
+  show_asset_not_needed: true
+  sync_mode: append
+  minimum_items: 1
+  default_collection_order:
+  delete_below_minimum: true
+  delete_not_scheduled: false
+  run_again_delay: 2
+  missing_only_released: false
+  missing_path: /config/missing
+  show_unmanaged: true
+  show_filtered: false
+  show_options: false
+  show_missing: false
+  show_missing_assets: true
+  only_filter_missing: false
+  save_report: true
+  tvdb_language: eng
+  ignore_ids:
+  ignore_imdb_ids:
+  item_refresh_delay: 0
+  playlist_sync_to_users: all
+  playlist_exclude_users:
+    run_order:
+    - operations
+    - metadata
+    - collections
+    - overlays
+  overlay_artwork_quality: 75
+  overlay_artwork_filetype: jpg
+  playlist_report: false
+  verify_ssl: true
+  check_nightly: false
+  show_unconfigured: true
+  run_order:
+  - operations
+  - metadata
+  - collections
+  - overlays
+  show_unfiltered: false
+  custom_repo:
+plex:
+  url: http://192.168.1.23:32400
+  token: <<PLEX_API_KEY>>
+  timeout: 60
+  db_cache: 4096
+  clean_bundles: true
+  empty_trash: true
+  optimize: false
+  verify_ssl: false
+tmdb: 
+  apikey: <<TMDB_API_KEY>>
+  language: en
+  cache_expiration: 60
+  region:
+tautulli:
+  url: http://tautulli.media
+  apikey: <<TAUTULLI_API_KEY>>
+omdb:
+  apikey: <<OMDB_API_KEY>>
+  cache_expiration: 60
+mdblist:
+  apikey: <<MDBLIST_API_KEY>>
+  cache_expiration: 60
+trakt:
+  client_id: <<TRAKT_CLIENT_ID>>
+  client_secret: <<TRAKT_CLIENT_SECRET>>
+  authorization:
+    access_token: <<TRAKT_ACCESS_TOKEN>>
+    token_type: Bearer
+    expires_in: <<TRAKT_EXPIRES_IN>>
+    refresh_token: <<TRAKT_REFRESH_TOKEN>>
+    scope: public
+    created_at: <<TRAKT_CREATED_AT>>
+  pin:
+# notifiarr:
+#   API_KEY: <<NOTIFIARR_API_KEY>>
