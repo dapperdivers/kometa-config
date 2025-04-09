@@ -280,6 +280,15 @@ libraries: # This is called out once within the config.yml file
         font_color_canceled: '#ED1F1F'
         font_color_ended: '#FF0000'
         back_color: '#00000000'
+    # Season Overlay
+    - file: /config/overlays/media_info.yml
+      template_variables:
+        builder_level: season
+        use_gradient_top: false
+        use_gradient_bottom: false
+    - file: /config/overlays/audience_rating.yml
+      template_variables:
+        builder_level: season
     # Episode Overlay
     - file: /config/overlays/media_info.yml
       template_variables:
