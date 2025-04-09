@@ -253,13 +253,14 @@ libraries: # This is called out once within the config.yml file
     overlay_files:
     - file: /config/overlays/media_info.yml
       template_variables:
+        video_only: true
         use_gradient_top: false
         use_gradient_bottom: false
     - file: /config/overlays/audience_rating.yml
     - default: status
       template_variables:
         horizontal_align: center
-        vertical_align: Top
+        vertical_align: bottom
         vertical_offset: 23
         horizontal_offset: 0
         back_height: 149
