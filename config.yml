@@ -115,6 +115,7 @@ libraries: # This is called out once within the config.yml file
     overlay_files: &movie_overlays
     - file: /config/overlays/media_info.yml
       template_variables:
+        use_edition: false
         use_gradient_top: false
         use_gradient_bottom: false
     - file: /config/overlays/audience_rating.yml
@@ -293,6 +294,7 @@ libraries: # This is called out once within the config.yml file
     - file: /config/overlays/media_info.yml
       template_variables:
         builder_level: episode
+        use_edition: false
         use_gradient_top: true
         use_gradient_bottom: false
     - file: /config/overlays/audience_rating.yml
