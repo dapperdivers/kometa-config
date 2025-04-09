@@ -126,9 +126,9 @@ libraries: # This is called out once within the config.yml file
     - default: runtimes
       template_variables:
         text: ''
-        vertical_offset: 110
-        horizontal_align: right
-        horizontal_offset: 50
+        vertical_offset: 50 
+        vertical_align: top
+        horizontal_align: center
         back_align: center
         back_width: 140
         back_color: '#00000000'
@@ -274,7 +274,7 @@ libraries: # This is called out once within the config.yml file
         back_height: 149
         back_width: 965
         font: /config/overlays/fonts/Colus-Regular.ttf
-        font_size: 60
+        font_size: 80
         font_color_airing: '#27C24C'
         font_color_returning: '#FFA500'
         font_color_canceled: '#ED1F1F'
@@ -293,7 +293,7 @@ libraries: # This is called out once within the config.yml file
     - file: /config/overlays/media_info.yml
       template_variables:
         builder_level: episode
-        use_gradient_top: false
+        use_gradient_top: true
         use_gradient_bottom: false
     - file: /config/overlays/audience_rating.yml
       template_variables:
@@ -302,9 +302,9 @@ libraries: # This is called out once within the config.yml file
       template_variables:
         builder_level: episode
         text: ''
-        vertical_offset: 110
-        horizontal_align: right
-        horizontal_offset: 50
+        vertical_offset: 50
+        vertical_align: top
+        horizontal_align: center
         back_align: center
         back_width: 140
         back_color: '#00000000'
