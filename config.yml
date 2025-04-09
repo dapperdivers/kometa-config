@@ -304,10 +304,11 @@ libraries: # This is called out once within the config.yml file
     - default: runtimes
       template_variables:
         builder_level: episode
+        horizontal_offset: 225
         text: ''
-        vertical_offset: 50
+        vertical_offset: 40
         vertical_align: top
-        horizontal_align: center
+        horizontal_align: left
         back_align: center
         back_width: 140
         back_color: '#00000000'
