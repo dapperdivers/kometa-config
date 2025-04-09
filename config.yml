@@ -120,14 +120,17 @@ libraries: # This is called out once within the config.yml file
     - file: /config/overlays/audience_rating.yml
     - default: mediastinger
       template_variables:
-        vertical_offset: 50
+        horizontal_align: left
+        horizontal_offset: 60
+        vertical_offset: 150
     - default: runtimes
       template_variables:
-        vertical_offset: 37
-        horizontal_align: center
-        horizontal_offset: 140
         text: ''
-        back_width: 205
+        vertical_offset: 110
+        horizontal_align: right
+        horizontal_offset: 50
+        back_align: center
+        back_width: 140
         back_color: '#00000000'
     - remove_overlays: false
     operations:
@@ -276,16 +279,25 @@ libraries: # This is called out once within the config.yml file
         font_color_canceled: '#ED1F1F'
         font_color_ended: '#FF0000'
         back_color: '#00000000'
+    # Episode Overlay
+    - file: /config/overlays/media_info.yml
+      template_variables:
+        builder_level: episode
+        use_gradient_top: false
+        use_gradient_bottom: false
+    - file: /config/overlays/audience_rating.yml
+      template_variables:
+        builder_level: episode
     - default: runtimes
       template_variables:
         builder_level: episode
-        horizontal_align: right
-        back_color: '#00000000'
-        back_height: 80
-        vertical_offset: 20
-        horizontal_offset: 18
         text: ''
-        back_width: 205
+        vertical_offset: 110
+        horizontal_align: right
+        horizontal_offset: 50
+        back_align: center
+        back_width: 140
+        back_color: '#00000000'
     - remove_overlays: false
     operations:
       <<: [*id001, *id002, *id003, *id004, *id005, *id006, *id007, *id008]
