@@ -168,7 +168,7 @@ libraries: # This is called out once within the config.yml file
       - omdb     # Update all original available date from omdb(imdb) if not from tvdb
     minimum_items: &minimum_items 1
     radarr: &radarr
-      url: <<RADARR_UHD_URL>>
+      url: <<RADARR_UHD_HOST>>
       token: <<RADARR_UHD_API_KEY>>
       add_missing: false
       add_existing: true
@@ -178,11 +178,6 @@ libraries: # This is called out once within the config.yml file
       ignore_cache: false
       availability: announced
       quality_profile: UHD Bluray + WEB
-      tag:
-      search: false
-      radarr_path:
-      plex_path:
-      upgrade_existing: false
   Movies:
     <<: *movie_config
     settings:
@@ -190,7 +185,7 @@ libraries: # This is called out once within the config.yml file
       asset_directory: /assets/Movies
     radarr:
       <<: *radarr
-      url: <<RADARR_URL>>
+      url: <<RADARR_HOST>>
       token: <<RADARR_API_KEY>>
       root_folder_path: <<RADARR_ROOT_FOLDER_PATH>>
       quality_profile: HD Bluray + WEB
@@ -291,7 +286,7 @@ libraries: # This is called out once within the config.yml file
     operations:
       <<: [*id001, *id002, *id003, *id004, *id005, *id006, *id007, *id008]
     sonarr: &sonarr
-      url: <<SONARR_UHD_URL>>
+      url: <<SONARR_UHD_HOST>>
       token: <<SONARR_UHD_API_KEY>>
       add_missing: false
       add_existing: true
@@ -301,12 +296,6 @@ libraries: # This is called out once within the config.yml file
       language_profile: English
       series_type: standard
       season_folder: true
-      tag:
-      search: false
-      cutoff_search: false
-      sonarr_path:
-      plex_path:
-      upgrade_existing: false
   TV Shows:
     <<: *tv_config
     settings:
@@ -314,7 +303,7 @@ libraries: # This is called out once within the config.yml file
       asset_directory: /assets/TV Shows
     sonarr:
       <<: *sonarr
-      url: <<SONARR_URL>> 
+      url: <<SONARR_HOST>> 
       token: <<SONARR_API_KEY>>
       root_folder_path: <<SONARR_ROOT_FOLDER_PATH>>
       quality_profile: WEB-1080p
@@ -372,7 +361,7 @@ settings:
   show_unfiltered: false
   custom_repo:
 plex:
-  url: <<PLEX_URL>>
+  url: <<PLEX_HOST>>
   token: <<PLEX_API_KEY>>
   timeout: 60
   db_cache: 4096
@@ -386,7 +375,7 @@ tmdb:
   cache_expiration: 60
   region:
 tautulli:
-  url: <<TAUTULLI_URL>>
+  url: <<TAUTULLI_HOST>>
   apikey: <<TAUTULLI_API_KEY>>
 omdb:
   apikey: <<OMDB_API_KEY>>
