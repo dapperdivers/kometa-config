@@ -116,7 +116,7 @@ libraries: # This is called out once within the config.yml file
     - file: /config/overlays/media_info.yml
       template_variables:
         use_edition: false
-        use_gradient_top: false
+        use_gradient_top: true
         use_gradient_bottom: false
     - file: /config/overlays/audience_rating.yml
     - default: mediastinger
@@ -126,10 +126,11 @@ libraries: # This is called out once within the config.yml file
         vertical_offset: 150
     - default: runtimes
       template_variables:
+        horizontal_offset: 225
         text: ''
-        vertical_offset: 50 
+        vertical_offset: 40
         vertical_align: top
-        horizontal_align: center
+        horizontal_align: left
         back_align: center
         back_width: 140
         back_color: '#00000000'
@@ -296,7 +297,7 @@ libraries: # This is called out once within the config.yml file
         builder_level: episode
         use_edition: false
         use_gradient_top: true
-        use_gradient_bottom: false
+        use_gradient_bottom: true
     - file: /config/overlays/audience_rating.yml
       template_variables:
         builder_level: episode
