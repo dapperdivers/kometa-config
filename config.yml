@@ -3,6 +3,7 @@ libraries: # This is called out once within the config.yml file
     settings: &kometa_settings
       asset_directory: /assets/4k-Movies
       prioritize_assets: true
+      minimum_items: 2
     run_order: &run_order
     - collections
     - metadata
@@ -32,6 +33,10 @@ libraries: # This is called out once within the config.yml file
       - default: imdb # IMDb Charts (Popular, Trending, etc.)
       - default: myanimelist # MAL Charts (Popular, Trending, etc.)
       - default: other_chart # Other Charts (Popular, Trending, etc.)
+        template_variables:
+          use_pirated: true
+          visible_home_pirated: true
+          visible_shared_pirated: true
       - default: tautulli # Tautulli Charts (Popular, Trending, etc.)
       - default: tmdb # TMDb Charts (Popular, Trending, etc.)
       - default: trakt # Trakt Charts (Popular, Trending, etc.)
@@ -166,7 +171,6 @@ libraries: # This is called out once within the config.yml file
       - tmdb     # Update all original available date from tmdb
       - tvdb     # Update all original available date from tvdb if not from tmdb
       - omdb     # Update all original available date from omdb(imdb) if not from tvdb
-    minimum_items: &minimum_items 1
     radarr: &radarr
       url: <<RADARR_UHD_HOST>>
       token: <<RADARR_UHD_API_KEY>>
@@ -283,7 +287,6 @@ libraries: # This is called out once within the config.yml file
         text: ''
         back_width: 205
     - remove_overlays: false
-    minimum_items: *minimum_items
     operations:
       <<: [*id001, *id002, *id003, *id004, *id005, *id006, *id007, *id008]
     sonarr: &sonarr
@@ -323,7 +326,7 @@ settings:
   show_missing_episode_assets: false
   show_asset_not_needed: true
   sync_mode: append
-  minimum_items: 1
+  minimum_items: 2
   default_collection_order:
   delete_below_minimum: true
   delete_not_scheduled: false
