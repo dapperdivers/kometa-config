@@ -77,11 +77,11 @@ libraries: # This is called out once within the config.yml file
       - omdb     # Update all original available date from omdb(imdb) if not from tvdb
     minimum_items: &minimum_items 1
     radarr: &radarr
-      url: http://radarr-uhd.media
+      url: <<RADARR_UHD_URL>>
       token: <<RADARR_UHD_API_KEY>>
       add_missing: false
       add_existing: true
-      root_folder_path: "/media/baby_plex/movies-4k"
+      root_folder_path: <<RADARR_UHD_ROOT_FOLDER_PATH>>
       monitor: true
       monitor_existing: true
       ignore_cache: false
@@ -99,9 +99,9 @@ libraries: # This is called out once within the config.yml file
       asset_directory: /assets/Movies
     radarr:
       <<: *radarr
-      url: http://radarr.media
+      url: <<RADARR_URL>>
       token: <<RADARR_API_KEY>>
-      root_folder_path: "/media/baby_plex/Movies"
+      root_folder_path: <<RADARR_ROOT_FOLDER_PATH>>
       quality_profile: HD Bluray + WEB
   4k-TV Shows: &tv_config
     settings:
@@ -152,11 +152,11 @@ libraries: # This is called out once within the config.yml file
     operations:
       <<: [*id001, *id002, *id003, *id004, *id005, *id006, *id007, *id008]
     sonarr: &sonarr
-      url: http://sonarr-uhd.media
+      url: <<SONARR_UHD_URL>>
       token: <<SONARR_UHD_API_KEY>>
       add_missing: false
       add_existing: true
-      root_folder_path: "/media/baby_plex/tv-4k"
+      root_folder_path: <<SONARR_UHD_ROOT_FOLDER_PATH>>
       monitor: all
       quality_profile: WEB-2160p
       language_profile: English
@@ -175,9 +175,9 @@ libraries: # This is called out once within the config.yml file
       asset_directory: /assets/TV Shows
     sonarr:
       <<: *sonarr
-      url: http://sonarr.media
+      url: <<SONARR_URL>> 
       token: <<SONARR_API_KEY>>
-      root_folder_path: "/media/baby_plex/Shows"
+      root_folder_path: <<SONARR_ROOT_FOLDER_PATH>>
       quality_profile: WEB-1080p
 
 settings:
@@ -219,7 +219,7 @@ settings:
     - metadata
     - collections
     - overlays
-  overlay_artwork_quality: 75
+  overlay_artwork_quality: 85
   overlay_artwork_filetype: jpg
   playlist_report: false
   verify_ssl: true
@@ -233,7 +233,7 @@ settings:
   show_unfiltered: false
   custom_repo:
 plex:
-  url: http://192.168.1.23:32400
+  url: <<PLEX_URL>>
   token: <<PLEX_API_KEY>>
   timeout: 60
   db_cache: 4096
@@ -247,7 +247,7 @@ tmdb:
   cache_expiration: 60
   region:
 tautulli:
-  url: http://tautulli.media
+  url: <<TAUTULLI_URL>>
   apikey: <<TAUTULLI_API_KEY>>
 omdb:
   apikey: <<OMDB_API_KEY>>
