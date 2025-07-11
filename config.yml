@@ -1,7 +1,7 @@
 libraries: # This is called out once within the config.yml file
-  4k-Movies: &movie_config
+  Movies: &movie_config
     settings: &kometa_settings
-      asset_directory: /assets/4k-Movies
+      asset_directory: /assets/Movies
       prioritize_assets: true
       minimum_items: 2
     run_order: &run_order
@@ -177,28 +177,17 @@ libraries: # This is called out once within the config.yml file
       - tvdb     # Update all original available date from tvdb if not from tmdb
       - omdb     # Update all original available date from omdb(imdb) if not from tvdb
     radarr: &radarr
-      url: <<RADARR_UHD_HOST>>
-      token: <<RADARR_UHD_API_KEY>>
+      url: <<RADARR_HOST>>
+      token: <<RADARR_API_KEY>>
       add_missing: false
       add_existing: true
-      root_folder_path: <<RADARR_UHD_ROOT_FOLDER_PATH>>
+      root_folder_path: <<RADARR_ROOT_FOLDER_PATH>>
       monitor: true
       monitor_existing: true
       ignore_cache: false
       availability: announced
-      quality_profile: UHD Bluray + WEB
-  Movies:
-    <<: *movie_config
-    settings:
-      <<: *kometa_settings
-      asset_directory: /assets/Movies
-    radarr:
-      <<: *radarr
-      url: <<RADARR_HOST>>
-      token: <<RADARR_API_KEY>>
-      root_folder_path: <<RADARR_ROOT_FOLDER_PATH>>
       quality_profile: HD Bluray + WEB
-  4k-TV Shows: &tv_config
+  TV Shows: &tv_config
     settings:
       <<: *kometa_settings
       asset_directory: /assets/4k-TV Shows
@@ -316,27 +305,16 @@ libraries: # This is called out once within the config.yml file
     operations:
       <<: [*id001, *id002, *id003, *id004, *id005, *id006, *id007, *id008]
     sonarr: &sonarr
-      url: <<SONARR_UHD_HOST>>
-      token: <<SONARR_UHD_API_KEY>>
+      url: <<SONARR_HOST>>
+      token: <<SONARR_API_KEY>>
       add_missing: false
       add_existing: true
-      root_folder_path: <<SONARR_UHD_ROOT_FOLDER_PATH>>
+      root_folder_path: <<SONARR_ROOT_FOLDER_PATH>>
       monitor: all
-      quality_profile: WEB-2160p
+      quality_profile: WEB-1080p
       language_profile: English
       series_type: standard
       season_folder: true
-  TV Shows:
-    <<: *tv_config
-    settings:
-      <<: *kometa_settings
-      asset_directory: /assets/TV Shows
-    sonarr:
-      <<: *sonarr
-      url: <<SONARR_HOST>> 
-      token: <<SONARR_API_KEY>>
-      root_folder_path: <<SONARR_ROOT_FOLDER_PATH>>
-      quality_profile: WEB-1080p
 
 settings:
   cache: true
