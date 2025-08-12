@@ -75,14 +75,35 @@ grep -i warning logs/meta.log
 - Schedule collections using cron-like syntax (e.g., `weekly(monday)`)
 
 ### Scheduling and Visibility
+- **Critical Rule**: ONLY use official Kometa schedule options from https://kometa.wiki/en/latest/config/schedule/#important
 - `schedule` option controls when Kometa processes a collection (NOT when Kometa runs)
 - Collections with no `schedule` default to `daily`
 - `visible_home` and `visible_shared` only work if the collection processes when Kometa runs
 - **Critical Rule**: `schedule` should run more often than the `visible_*` options
 - **Problem Example**: `schedule: monthly(8)` but `visible_home: weekly(tuesday)` will skip processing on most Tuesdays
-- **Community Best Practices**:
-  2. **Multi-Day Weekly**: `schedule: daily` + `visible_home: weekly(monday)`
-  3. **Broad Scheduling Window**: `schedule: weekly(monday|tuesday|wednesday)` + `visible_home: weekly(tuesday)`
+
+#### Official Kometa Schedule Options (THESE ARE THE ONLY VALID OPTIONS)
+| Type | Description | Format | Examples |
+|------|-------------|--------|----------|
+| **Hourly** | Update in specific hour(s) | `hourly(Hour)` or `hourly(Start-End)` | `hourly(17)`, `hourly(17-04)` |
+| **Daily** | Update once daily | `daily` | `daily` |
+| **Weekly** | Update on specific days | `weekly(Days)` | `weekly(sunday)`, `weekly(sunday\|tuesday)` |
+| **Monthly** | Update on specific day of month | `monthly(Day)` | `monthly(1)` |
+| **Yearly** | Update on specific date | `yearly(MM/DD)` | `yearly(01/30)` |
+| **Date** | Update on specific date | `date(MM/DD/YYYY)` | `date(12/25/2024)` |
+| **Range** | Update within date range(s) | `range(MM/DD-MM/DD)` | `range(12/01-12/31)`, `range(8/01-8/15\|9/01-9/15)` |
+| **Never** | Never updates | `never` | `never` |
+| **Non Existing** | Updates if doesn't exist | `non_existing` | `non_existing` |
+| **All** | All conditions must be met | `all[Options]` | `all[weekly(sunday), hourly(17)]` |
+
+#### **CRITICAL**: DO NOT USE ANY OTHER SCHEDULE OPTIONS
+- ❌ **INVALID**: `quarterly`, `biweekly`, `bimonthly`, `every_other_day`, etc.
+- ✅ **VALID**: Only the options listed in the table above
+
+#### Community Best Practices:
+1. **Perfect Alignment**: `schedule: weekly(tuesday)` + `visible_home: weekly(tuesday)`
+2. **Multi-Day Weekly**: `schedule: daily` + `visible_home: weekly(monday)`
+3. **Broad Scheduling Window**: `schedule: weekly(monday|tuesday|wednesday)` + `visible_home: weekly(tuesday)`
 - **Preferred solution**: Use broader scheduling windows around visibility days to ensure collection processes when needed
 
 ### Known Issues to Check

@@ -23,14 +23,18 @@ settings:
   run_again_delay: 10          # 10-second delay between operations
   item_refresh_delay: 3        # 3-second delay between item refreshes
   minimum_items: 5             # Higher threshold reduces small collections
+  ignore_empty_smart_collections: true  # Skip empty smart collections
 
 plex:
+  timeout: 120                 # Increased timeout for large libraries
   clean_bundles: false         # Disable heavy operations
   empty_trash: false           # Disable heavy operations
 
 operations:
   assets_for_all: false        # Disable daily asset scanning
   # NO global schedule - individual operations manage their own schedules
+trakt:
+  force_refresh: false         # Reduce API calls
 ```
 
 ### Mass Operation Staggering
@@ -44,48 +48,29 @@ operations:
     mass_audience_rating_update: tmdb
   - schedule: monthly(22)        # Content ratings - monthly
     mass_content_rating_update: mdb_commonsense
-  - schedule: quarterly(01/01)   # Studio updates - quarterly
-    mass_studio_update: tmdb
-  - schedule: quarterly(04/01)   # Available dates - quarterly
-    mass_originally_available_update: tmdb
 ```
 
 ## Collection Rotation Rules
 
-### 1. Subgenres - Weekly Rotation
-**Update Schedule**: Weekly (perfect alignment with visibility)
-**Visibility**: Weekly rotation on home/shared screens
+### 1. Subgenres - Multi-Day Weekly Approach
+**Update Schedule**: Multi-day weekly updates (3 days per week)
+**Visibility**: Single day weekly visibility (perfect alignment)
 
 ```yaml
 # Monday: Action/Adventure
-schedule: weekly(monday)
-visible_home: weekly(monday)
+schedule: weekly(sunday|monday|tuesday)    # Multi-Day Weekly approach
+visible_home: weekly(monday)               # Single day visibility
 visible_shared: weekly(monday)
 
 # Tuesday: Comedy/Satire + Crime/Thriller  
-schedule: weekly(tuesday)
-visible_home: weekly(tuesday)
+schedule: weekly(sunday|monday|tuesday)    # Multi-Day Weekly approach
+visible_home: weekly(tuesday)              # Single day visibility
 visible_shared: weekly(tuesday)
 
-# Wednesday: Fantasy/Supernatural + Horror/Occult
-schedule: weekly(wednesday)
-visible_home: weekly(wednesday)
-visible_shared: weekly(wednesday)
-
-# Thursday: Sci-Fi/Futuristic + Historical/Period
-schedule: weekly(thursday)
-visible_home: weekly(thursday)
-visible_shared: weekly(thursday)
-
-# Friday: Romance/Drama + Exploitation
-schedule: weekly(friday)
-visible_home: weekly(friday)
-visible_shared: weekly(friday)
-
-# Saturday: Experimental/Artistic
-schedule: weekly(saturday)
-visible_home: weekly(saturday)
-visible_shared: weekly(saturday)
+# Note: All other subgenre files follow same pattern:
+# - Schedule runs 3x per week for reliability
+# - Visibility rotates to specific day for clean home screen
+# - Each category gets one dedicated visibility day
 ```
 
 ### 2. Awards - Seasonal Rotation
@@ -167,29 +152,34 @@ Birthday: tmdb_birthday.this_month: true  # Built-in monthly visibility
 ```
 
 ### 4. Charts - Multi-Day Weekly Approach
-**Update Schedule**: Weekly updates
-**Visibility**: Always visible (Multi-Day Weekly pattern)
+**Update Schedule**: Multi-day weekly updates for reliability
+**Visibility**: Always visible (daily)
 
 ```yaml
 Other Chart (Pirated): 
-  schedule: daily                 # Perfect alignment
+  schedule: daily                 # Daily updates for fresh pirated content
   visible_home: daily
   visible_shared: daily
 
-IMDb:
-  schedule: weekly(monday)        # Multi-Day Weekly approach
-  visible_home: daily             # Always visible (processes weekly)
+IMDb (Movies):
+  schedule: weekly(sunday|monday|tuesday)   # Multi-Day Weekly approach
+  visible_home: daily                       # Always visible
   visible_shared: daily
 
-Tautulli:
-  schedule: weekly(wednesday)     # Multi-Day Weekly approach  
-  visible_home: daily             # Always visible (processes weekly)
+Tautulli (Movies):
+  schedule: weekly(tuesday|wednesday|thursday)  # Multi-Day Weekly approach
+  visible_home: daily                           # Always visible
   visible_shared: daily
 
-TMDb:
-  schedule: weekly(friday)        # Multi-Day Weekly approach
-  visible_home: daily             # Always visible (processes weekly)
+TMDb (Movies):
+  schedule: weekly(thursday|friday|saturday)    # Multi-Day Weekly approach
+  visible_home: daily                           # Always visible
   visible_shared: daily
+
+# TV Shows have additional charts:
+AniList (TV): weekly(sunday|monday|tuesday)
+MyAnimeList (TV): weekly(tuesday|wednesday|thursday)
+Trakt (TV): weekly(friday|saturday|sunday)
 ```
 
 ### 5. Always Visible Collections
@@ -229,13 +219,35 @@ collections:
 
 ## Critical Scheduling Rules
 
+### Official Kometa Schedule Options (ONLY VALID OPTIONS)
+Reference: https://kometa.wiki/en/latest/config/schedule/#important
+
+| Type | Description | Format | Examples |
+|------|-------------|--------|----------|
+| **Hourly** | Update in specific hour(s) | `hourly(Hour)` or `hourly(Start-End)` | `hourly(17)`, `hourly(17-04)` |
+| **Daily** | Update once daily | `daily` | `daily` |
+| **Weekly** | Update on specific days | `weekly(Days)` | `weekly(sunday)`, `weekly(sunday\|tuesday)` |
+| **Monthly** | Update on specific day of month | `monthly(Day)` | `monthly(1)` |
+| **Yearly** | Update on specific date | `yearly(MM/DD)` | `yearly(01/30)` |
+| **Date** | Update on specific date | `date(MM/DD/YYYY)` | `date(12/25/2024)` |
+| **Range** | Update within date range(s) | `range(MM/DD-MM/DD)` | `range(12/01-12/31)`, `range(8/01-8/15\|9/01-9/15)` |
+| **Never** | Never updates | `never` | `never` |
+| **Non Existing** | Updates if doesn't exist | `non_existing` | `non_existing` |
+| **All** | All conditions must be met | `all[Options]` | `all[weekly(sunday), hourly(17)]` |
+
+### **CRITICAL**: DO NOT USE INVALID SCHEDULE OPTIONS
+- ❌ **INVALID**: `quarterly`, `biweekly`, `bimonthly`, `every_other_day`, etc.
+- ✅ **VALID**: Only the options listed in the table above
+
+### Scheduling Guidelines
 Following CLAUDE.md guidelines, schedule MUST:
 1. **Perfect Alignment**: `schedule` matches `visible_*` exactly
 2. **Multi-Day Weekly**: `schedule: weekly(day)` + `visible_home: daily` 
 3. **Broad Scheduling Window**: `schedule` runs more often than `visible_*`
 
 **❌ NEVER DO**: `schedule: monthly(8)` + `visible_home: weekly(tuesday)`
-**✅ CORRECT**: `schedule: weekly(tuesday)` + `visible_home: weekly(tuesday)`
+**✅ CORRECT**: `schedule: weekly(sunday|monday|tuesday)` + `visible_home: weekly(tuesday)`
+**✅ ALSO CORRECT**: `schedule: weekly(tuesday)` + `visible_home: weekly(tuesday)` (Perfect Alignment)
 
 ## Monitoring and Maintenance
 
@@ -259,16 +271,16 @@ Following CLAUDE.md guidelines, schedule MUST:
 ## File Organization
 ```
 /config/custom/movie_subgenre/
-├── action_adventure.yml      # Weekly(Monday), Visible Monday
-├── comedy_satire.yml         # Weekly(Tuesday), Visible Tuesday  
-├── crime_thriller.yml        # Weekly(Tuesday), Visible Tuesday
-├── fantasy_supernatural.yml  # Weekly(Wednesday), Visible Wednesday
-├── horror_occult.yml         # Weekly(Wednesday), Visible Wednesday
-├── sci_fi_futuristic.yml     # Weekly(Thursday), Visible Thursday
-├── historical_period.yml     # Weekly(Thursday), Visible Thursday
-├── romance_drama.yml         # Weekly(Friday), Visible Friday
-├── exploitation_niche.yml    # Weekly(Friday), Visible Friday
-└── experimental_artistic.yml # Weekly(Saturday), Visible Saturday
+├── action_adventure.yml      # Schedule: Sun|Mon|Tue, Visible: Monday
+├── comedy_satire.yml         # Schedule: Sun|Mon|Tue, Visible: Tuesday  
+├── crime_thriller.yml        # Schedule: Sun|Mon|Tue, Visible: Tuesday
+├── fantasy_supernatural.yml  # Schedule: Sun|Mon|Tue, Visible: Wednesday
+├── horror_occult.yml         # Schedule: Sun|Mon|Tue, Visible: Wednesday
+├── sci_fi_futuristic.yml     # Schedule: Sun|Mon|Tue, Visible: Thursday
+├── historical_period.yml     # Schedule: Sun|Mon|Tue, Visible: Thursday
+├── romance_drama.yml         # Schedule: Sun|Mon|Tue, Visible: Friday
+├── exploitation_niche.yml    # Schedule: Sun|Mon|Tue, Visible: Friday
+└── experimental_artistic.yml # Schedule: Sun|Mon|Tue, Visible: Saturday
 ```
 
 ## Benefits
