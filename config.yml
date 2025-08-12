@@ -29,27 +29,84 @@ libraries: # This is called out once within the config.yml file
       - default: based # collections based on a book, comic, story, video game
       - default: separator_award # An "index card"
       - default: pca # People's Choice Awards
+        schedule: range(11/01-12/31)  # PCA season
+        template_variables:
+          visible_home: range(11/01-12/31)
+          visible_shared: range(11/01-12/31)
       - default: sag # Screen Actors Guild Awards
+        schedule: range(01/15-02/15)  # SAG season
+        template_variables:
+          visible_home: range(01/15-02/15)
+          visible_shared: range(01/15-02/15)
       - default: tiff # Toronto International Film Festival Awards
+        schedule: range(09/01-10/15)  # TIFF season
+        template_variables:
+          visible_home: range(09/01-10/15)
+          visible_shared: range(09/01-10/15)
       - default: bafta # BAFTA Awards
+        schedule: range(01/01-02/28)  # BAFTA season  
+        template_variables:
+          visible_home: range(01/01-02/28)
+          visible_shared: range(01/01-02/28)
       - default: cannes # Cannes Film Festival Awards
+        schedule: range(05/01-06/15)  # Cannes season
+        template_variables:
+          visible_home: range(05/01-06/15)
+          visible_shared: range(05/01-06/15)
       - default: choice # Critic's Choice Awards
+        schedule: range(01/01-02/15)  # Critics Choice season
+        template_variables:
+          visible_home: range(01/01-02/15)
+          visible_shared: range(01/01-02/15)
       - default: emmy # Emmy Awards
+        schedule: range(08/01-10/15)  # Emmy season
+        template_variables:
+          visible_home: range(08/01-10/15)
+          visible_shared: range(08/01-10/15)
       - default: golden # Golden Globes Awards
+        schedule: range(12/01-01/31)  # Golden Globes season
+        template_variables:
+          visible_home: range(12/01-01/31)
+          visible_shared: range(12/01-01/31)
       - default: oscars # The Oscars
+        schedule: range(02/01-04/15)  # Oscar season
+        template_variables:
+          visible_home: range(02/01-04/15)
+          visible_shared: range(02/01-04/15)
       - default: spirit # Independent Spirit Awards
+        schedule: range(02/15-03/31)  # Spirit Awards season
+        template_variables:
+          visible_home: range(02/15-03/31)
+          visible_shared: range(02/15-03/31)
       - default: sundance # Sundance Film Festival Awards
+        schedule: range(01/15-02/15)  # Sundance season
+        template_variables:
+          visible_home: range(01/15-02/15)
+          visible_shared: range(01/15-02/15)
       - default: separator_chart # An "index card"
       - default: imdb # IMDb Charts (Popular, Trending, etc.)
-      - default: myanimelist # MAL Charts (Popular, Trending, etc.)
+        schedule: weekly(sunday|monday|tuesday)
+        template_variables:
+          visible_home: daily
+          visible_shared: daily
       - default: other_chart # Other Charts (Popular, Trending, etc.)
+        schedule: daily  # Pirated content updates daily
         template_variables:
           use_pirated: true
           visible_home_pirated: true
           visible_shared_pirated: true
+          visible_home: daily  # Always visible
+          visible_shared: daily
       - default: tautulli # Tautulli Charts (Popular, Trending, etc.)
+        schedule: weekly(tuesday|wednesday|thursday)
+        template_variables:
+          visible_home: daily
+          visible_shared: daily
       - default: tmdb # TMDb Charts (Popular, Trending, etc.)
-      - default: trakt # Trakt Charts (Popular, Trending, etc.)
+        schedule: weekly(thursday|friday|saturday)
+        template_variables:
+          visible_home: daily
+          visible_shared: daily
       - default: basic # Some basic chart collections based on recently released media in your library
       - default: collectionless # Collectionless collection to help Show/Hide Movies/Shows properly in your library
       - default: actor
@@ -67,26 +124,38 @@ libraries: # This is called out once within the config.yml file
           tmdb_birthday:
             this_month: true
       - default: actor # Actors
+        schedule: range(01/01-01/31,05/01-05/31,09/01-09/30)  # Months 1,5,9
         template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
+          visible_home: range(01/01-01/31,05/01-05/31,09/01-09/30)
+          visible_shared: range(01/01-01/31,05/01-05/31,09/01-09/30)
           data:
             depth: 1
             limit: 15
       - default: director # Directors
+        schedule: range(02/01-02/28,06/01-06/30,10/01-10/31)  # Months 2,6,10
         template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
+          visible_home: range(02/01-02/28,06/01-06/30,10/01-10/31)
+          visible_shared: range(02/01-02/28,06/01-06/30,10/01-10/31)
           data:
             depth: 1
             limit: 15
       - default: producer # Producers
+        schedule: range(03/01-03/31,07/01-07/31,11/01-11/30)  # Months 3,7,11
         template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
+          visible_home: range(03/01-03/31,07/01-07/31,11/01-11/30)
+          visible_shared: range(03/01-03/31,07/01-07/31,11/01-11/30)
           data:
             depth: 1
             limit: 15
       - default: writer # Writers
+        schedule: range(04/01-04/30,08/01-08/31,12/01-12/31)  # Months 4,8,12
         template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
+          visible_home: range(04/01-04/30,08/01-08/31,12/01-12/31)
+          visible_shared: range(04/01-04/30,08/01-08/31,12/01-12/31)
           data:
             depth: 1
             limit: 15
@@ -147,21 +216,20 @@ libraries: # This is called out once within the config.yml file
       - remove_overlays: false
     operations:
       - &id001
-        schedule: daily
         split_duplicates: false # Splits all duplicate movies/shows found in this library
-        assets_for_all: true # Search in assets for images for every item in your library
+        assets_for_all: false # Disabled - was causing daily database load
         delete_collections:
           configured: false # False - Collection must be an Unconfigured Collection to be deleted (collection is not in the config file of the specific Kometa run).
           managed: false # False - Collection must be an Unmanaged Collection to be deleted (the collection does not have the Kometa label)
           less: 99999 # Effectively all collections regardless of the number of items in the collection
       - &id002
-        schedule: Weekly (monday)
+        schedule: monthly(1)
         mass_user_rating_update: mdb_tomatoes
       - &id003
-        schedule: Weekly (wednesday)
+        schedule: monthly(8)
         mass_critic_rating_update: imdb
       - &id004
-        schedule: Weekly (friday)
+        schedule: monthly(15)
         mass_audience_rating_update: tmdb
       - &id005
         schedule: yearly(01/01)
@@ -170,18 +238,18 @@ libraries: # This is called out once within the config.yml file
           - imdb # Update all genres from imdb if not from tmdb
           - tvdb # Update all genres from tvdb if not from imdb
       - &id006
-        schedule: Weekly (friday)
+        schedule: monthly(22)
         mass_content_rating_update:
           - mdb_commonsense # Changes Content Rating to "1", "2" etc. to specify appropriate age
           - omdb # Changes Content Rating from omdb if not found on mdb_commonsense
       - &id007
-        schedule: Weekly (saturday)
+        schedule: quarterly(01/01)
         mass_studio_update:
           - tmdb
           - tvdb
           - omdb # Update all studios from tmdb
       - &id008
-        schedule: Weekly (sunday)
+        schedule: quarterly(04/01)
         mass_originally_available_update:
           - tmdb # Update all original available date from tmdb
           - tvdb # Update all original available date from tvdb if not from tmdb

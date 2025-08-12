@@ -6,9 +6,9 @@ templates:
     limit: 250
     #sort_title: "+130_<<collection_name>>"
     sync_mode: sync
-    visible_home: false
+    visible_home: <<visible_home>>
     visible_library: false
-    visible_shared: false
+    visible_shared: <<visible_shared>>
     imdb_search:
       genre: <<genre>>
       genre.any: <<genre.any>>
@@ -77,7 +77,7 @@ templates:
 collections:
   Chick Flick:
     #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_chick-flick.png
-    schedule: weekly(tuesday)
+    schedule: weekly(monday|tuesday|wednesday)
     #summary: "Top rated movies in Chick-flick"
     template:
       keyword: "chick-flick"
@@ -90,11 +90,13 @@ collections:
       name: sub_genre
       rating.gte: 5
       type: "movie,tv_movie"
+      visible_home: weekly(tuesday)
+      visible_shared: weekly(tuesday)
       votes.gte: 100
 
   Dark Comedy:
     #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_dark-comedy.png
-    schedule: weekly(tuesday)
+    schedule: weekly(monday|tuesday|wednesday)
     #summary: "Top rated movies in Dark Comedy"
     template:
       genre: "comedy"
@@ -104,11 +106,13 @@ collections:
       name: sub_genre
       rating.gte: 5
       type: "movie,tv_movie"
+      visible_home: weekly(tuesday)
+      visible_shared: weekly(tuesday)
       votes.gte: 1000
 
   Mockumentary:
     #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_mockumentary.png
-    schedule: weekly(tuesday)
+    schedule: weekly(monday|tuesday|wednesday)
     #summary: "Top rated movies in Mockumentary"
     template:
       imdb_extra_1: "https://www.imdb.com/list/ls027069047"
@@ -118,11 +122,13 @@ collections:
       name: sub_genre
       rating.gte: 2
       type: "movie,tv_movie"
+      visible_home: weekly(tuesday)
+      visible_shared: weekly(tuesday)
       votes.gte: 1000
 
   Parody:
     #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_parody.png
-    schedule: weekly(tuesday)
+    schedule: weekly(monday|tuesday|wednesday)
     #summary: "Top rated movies in Parody"
     template:
       keyword.any: "parody,parody-comedy"
@@ -131,11 +137,13 @@ collections:
       name: sub_genre
       rating.gte: 5
       type: "movie,tv_movie"
+      visible_home: weekly(tuesday)
+      visible_shared: weekly(tuesday)
       votes.gte: 1000
 
   Romantic Comedy:
     #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_romantic-comedy.png
-    schedule: weekly(tuesday)
+    schedule: weekly(monday|tuesday|wednesday)
     #summary: "Top rated movies in Romantic Comedy"
     template:
       genre: "romance,comedy"
@@ -144,6 +152,8 @@ collections:
       name: sub_genre
       rating.gte: 5
       type: "movie,tv_movie"
+      visible_home: weekly(tuesday)
+      visible_shared: weekly(tuesday)
       votes.gte: 1000
     filters:
       genre: Comedy
@@ -151,7 +161,7 @@ collections:
 
   Satire:
     #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_satire.png
-    schedule: weekly(tuesday)
+    schedule: weekly(monday|tuesday|wednesday)
     #summary: "Top rated movies in Satire"
     template:
       genre: "comedy"
@@ -161,11 +171,13 @@ collections:
       name: sub_genre
       rating.gte: 5
       type: "movie,tv_movie"
+      visible_home: weekly(tuesday)
+      visible_shared: weekly(tuesday)
       votes.gte: 1000
 
   Stoner Comedy:
     #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_stoner.png
-    schedule: weekly(tuesday)
+    schedule: weekly(monday|tuesday|wednesday)
     #summary: "Top rated movies in Stoner"
     template:
       keyword: "stoner,marijuana"
@@ -174,4 +186,6 @@ collections:
       name: sub_genre
       rating.gte: 1
       type: "movie,tv_movie"
+      visible_home: weekly(tuesday)
+      visible_shared: weekly(tuesday)
       votes.gte: 1000

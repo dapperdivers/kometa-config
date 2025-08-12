@@ -74,6 +74,18 @@ grep -i warning logs/meta.log
 - Custom collections defined in `custom/` directory
 - Schedule collections using cron-like syntax (e.g., `weekly(monday)`)
 
+### Scheduling and Visibility
+- `schedule` option controls when Kometa processes a collection (NOT when Kometa runs)
+- Collections with no `schedule` default to `daily`
+- `visible_home` and `visible_shared` only work if the collection processes when Kometa runs
+- **Critical Rule**: `schedule` should either match `visible_*` options OR run more often than the `visible_*` options
+- **Problem Example**: `schedule: monthly(8)` but `visible_home: weekly(tuesday)` will skip processing on most Tuesdays
+- **Community Best Practices**:
+  1. **Perfect Alignment**: `schedule: range(11/01-12/31)` + `visible_home: range(11/01-12/31)`
+  2. **Multi-Day Weekly**: `schedule: weekly(monday)` + `visible_home: daily`
+  3. **Broad Scheduling Window**: `schedule: weekly(monday|tuesday|wednesday)` + `visible_home: weekly(tuesday)`
+- **Preferred solution**: Use broader scheduling windows around visibility days to ensure collection processes when needed
+
 ### Known Issues to Check
 1. **YAML Syntax**: Line 380 in config.yml has trailing space after `tmdb:`
 2. **Collection Names**: Line 1395 in movie_subgenre.yml has extra quote in `Superhero"`
