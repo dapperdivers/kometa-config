@@ -1,0 +1,65 @@
+---
+# yamllint configuration for Kometa YAML files
+# Aligned with .prettierrc.yml for consistency
+# Updated to match existing file formatting patterns
+extends: default
+
+rules:
+  # Line length aligned with Prettier
+  line-length:
+    max: 200
+    level: warning
+    allow-non-breakable-words: true
+    allow-non-breakable-inline-mappings: true
+
+  # Indentation settings (matches Prettier tabWidth: 2)
+  indentation:
+    spaces: 2
+    indent-sequences: true
+    check-multi-line-strings: false
+
+  # Comments formatting (aligned with existing file formatting)
+  comments:
+    min-spaces-from-content: 1
+    require-starting-space: true
+
+  # Whitespace and formatting (aligned with Prettier)
+  trailing-spaces: enable
+  new-line-at-end-of-file: enable
+  new-lines:
+    type: unix  # Matches Prettier endOfLine: lf
+
+  # Spacing rules (aligned with Prettier bracketSpacing: false)
+  colons:
+    max-spaces-before: 0
+    max-spaces-after: 1
+  commas:
+    max-spaces-before: 0
+    min-spaces-after: 1
+    max-spaces-after: 1
+  brackets:
+    min-spaces-inside: 0
+    max-spaces-inside: 0  # Matches Prettier bracketSpacing: false
+  braces:
+    min-spaces-inside: 0
+    max-spaces-inside: 0  # Changed to match Prettier bracketSpacing: false
+
+  # Kometa-specific settings
+  document-start: disable  # Kometa configs don't require ---
+  document-end: disable    # Kometa configs don't require ...
+  empty-lines:
+    max: 2
+    max-start: 0
+    max-end: 1
+
+  # Boolean values for Kometa compatibility
+  truthy:
+    allowed-values: ['true', 'false', 'yes', 'no', 'on', 'off']
+    check-keys: false  # Allow truthy values in keys (common in Kometa)
+
+  # Key ordering and duplicates
+  key-duplicates: enable
+  key-ordering: disable  # Kometa allows flexible key ordering
+
+  # Quoted strings - disable for flexibility with existing files
+  quoted-strings: disable

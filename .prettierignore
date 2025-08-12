@@ -1,0 +1,14 @@
+# Ignore report files (they're auto-generated)
+*_report.yml
+
+# Ignore logs
+logs/
+!overlays/audience_ratings.yml
+!overlays/media_info.yml
+overlays/
+
+# Ignore cache files
+*.cache
+
+# Ignore UUID file
+UUID

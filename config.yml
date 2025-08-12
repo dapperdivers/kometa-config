@@ -3,19 +3,29 @@ libraries: # This is called out once within the config.yml file
     settings: &kometa_settings
       asset_directory: /assets/Movies
       prioritize_assets: true
-      minimum_items: 2
+      minimum_items: 5
     run_order: &run_order
-    - collections
-    - metadata
-    - operations
-    - overlays
+      - collections
+      - metadata
+      - operations
+      - overlays
     template_variables:
       sep_style: gray # use the gray separators globally for this library
       collection_mode: show # hide the collections
       language: en # could be default(which is en), da, de, fr, pt-br or another lang code that we have translated
       placeholder_imdb_id: tt8579674 # 1917 (2019) placeholder id for the separators
     collection_files: &movie_collections
-      - file: /config/custom/movie_subgenre.yml
+      # Movie Subgenre Collections - Split into categories for better organization
+      - file: /config/custom/movie_subgenre/action_adventure.yml        # Monday schedule
+      - file: /config/custom/movie_subgenre/comedy_satire.yml           # Tuesday schedule
+      - file: /config/custom/movie_subgenre/crime_thriller.yml          # Tuesday schedule
+      - file: /config/custom/movie_subgenre/fantasy_supernatural.yml    # Wednesday schedule
+      - file: /config/custom/movie_subgenre/horror_occult.yml           # Wednesday schedule
+      - file: /config/custom/movie_subgenre/sci_fi_futuristic.yml       # Thursday schedule
+      - file: /config/custom/movie_subgenre/historical_period.yml       # Thursday schedule
+      - file: /config/custom/movie_subgenre/romance_drama.yml           # Friday schedule
+      - file: /config/custom/movie_subgenre/exploitation_niche.yml      # Friday schedule
+      - file: /config/custom/movie_subgenre/experimental_artistic.yml   # Saturday schedule
       - default: based # collections based on a book, comic, story, video game
       - default: separator_award # An "index card"
       - default: pca # People's Choice Awards
@@ -113,69 +123,69 @@ libraries: # This is called out once within the config.yml file
       - default: streaming # Streaming on Disney+, Netflix, etc.
       - default: universe # Marvel Cinematic Universe, Wizarding World, etc.
     overlay_files: &movie_overlays
-    - file: /config/overlays/media_info.yml
-      template_variables:
-        use_edition: false
-        use_gradient_top: true
-        use_gradient_bottom: false
-    - file: /config/overlays/audience_rating.yml
-    - default: mediastinger
-      template_variables:
-        horizontal_align: left
-        horizontal_offset: 60
-        vertical_offset: 150
-    - default: runtimes
-      template_variables:
-        horizontal_offset: 225
-        text: ''
-        vertical_offset: 40
-        vertical_align: top
-        horizontal_align: left
-        back_align: center
-        back_width: 140
-        back_color: '#00000000'
-    - remove_overlays: false
+      - file: /config/overlays/media_info.yml
+        template_variables:
+          use_edition: false
+          use_gradient_top: true
+          use_gradient_bottom: false
+      - file: /config/overlays/audience_rating.yml
+      - default: mediastinger
+        template_variables:
+          horizontal_align: left
+          horizontal_offset: 60
+          vertical_offset: 150
+      - default: runtimes
+        template_variables:
+          horizontal_offset: 225
+          text: ""
+          vertical_offset: 40
+          vertical_align: top
+          horizontal_align: left
+          back_align: center
+          back_width: 140
+          back_color: "#00000000"
+      - remove_overlays: false
     operations:
-    - &id001
-      schedule: daily
-      split_duplicates: false   # Splits all duplicate movies/shows found in this library
-      assets_for_all: true   # Search in assets for images for every item in your library
-      delete_collections:
-        configured: false   # False - Collection must be an Unconfigured Collection to be deleted (collection is not in the config file of the specific Kometa run).
-        managed: false   # False - Collection must be an Unmanaged Collection to be deleted (the collection does not have the Kometa label)
-        less: 99999   # Effectively all collections regardless of the number of items in the collection
-    - &id002
-      schedule: Weekly (monday)
-      mass_user_rating_update: mdb_tomatoes
-    - &id003
-      schedule: Weekly (tuesday)
-      mass_critic_rating_update: imdb
-    - &id004
-      schedule: Weekly (wednesday)
-      mass_audience_rating_update: tmdb
-    - &id005
-      schedule: yearly(01/01)
-      mass_genre_update:
-      - tmdb     # Update all genres from tmdb
-      - imdb     # Update all genres from imdb if not from tmdb
-      - tvdb     # Update all genres from tvdb if not from imdb
-    - &id006
-      schedule: Weekly (friday)
-      mass_content_rating_update:
-      - mdb_commonsense     # Changes Content Rating to "1", "2" etc. to specify appropriate age
-      - omdb     # Changes Content Rating from omdb if not found on mdb_commonsense
-    - &id007
-      schedule: Weekly (saturday)
-      mass_studio_update:
-      - tmdb
-      - tvdb
-      - omdb     # Update all studios from tmdb
-    - &id008
-      schedule: Weekly (sunday)
-      mass_originally_available_update:
-      - tmdb     # Update all original available date from tmdb
-      - tvdb     # Update all original available date from tvdb if not from tmdb
-      - omdb     # Update all original available date from omdb(imdb) if not from tvdb
+      - &id001
+        schedule: daily
+        split_duplicates: false # Splits all duplicate movies/shows found in this library
+        assets_for_all: true # Search in assets for images for every item in your library
+        delete_collections:
+          configured: false # False - Collection must be an Unconfigured Collection to be deleted (collection is not in the config file of the specific Kometa run).
+          managed: false # False - Collection must be an Unmanaged Collection to be deleted (the collection does not have the Kometa label)
+          less: 99999 # Effectively all collections regardless of the number of items in the collection
+      - &id002
+        schedule: Weekly (monday)
+        mass_user_rating_update: mdb_tomatoes
+      - &id003
+        schedule: Weekly (wednesday)
+        mass_critic_rating_update: imdb
+      - &id004
+        schedule: Weekly (friday)
+        mass_audience_rating_update: tmdb
+      - &id005
+        schedule: yearly(01/01)
+        mass_genre_update:
+          - tmdb # Update all genres from tmdb
+          - imdb # Update all genres from imdb if not from tmdb
+          - tvdb # Update all genres from tvdb if not from imdb
+      - &id006
+        schedule: Weekly (friday)
+        mass_content_rating_update:
+          - mdb_commonsense # Changes Content Rating to "1", "2" etc. to specify appropriate age
+          - omdb # Changes Content Rating from omdb if not found on mdb_commonsense
+      - &id007
+        schedule: Weekly (saturday)
+        mass_studio_update:
+          - tmdb
+          - tvdb
+          - omdb # Update all studios from tmdb
+      - &id008
+        schedule: Weekly (sunday)
+        mass_originally_available_update:
+          - tmdb # Update all original available date from tmdb
+          - tvdb # Update all original available date from tvdb if not from tmdb
+          - omdb # Update all original available date from omdb(imdb) if not from tvdb
     radarr: &radarr
       url: <<RADARR_HOST>>
       token: <<RADARR_API_KEY>>
@@ -231,7 +241,7 @@ libraries: # This is called out once within the config.yml file
           tmdb_birthday:
             this_month: true
       - default: actor # Actors
-        template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used. 
+        template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
           data:
             depth: 1
@@ -249,59 +259,59 @@ libraries: # This is called out once within the config.yml file
       - default: streaming # Streaming on Disney+, Netflix, etc.
       - default: universe # Marvel Cinematic Universe, Wizarding World, etc.
     overlay_files:
-    - file: /config/overlays/media_info.yml
-      template_variables:
-        use_combined: false
-        use_audio: false
-        use_gradient_top: false
-        use_gradient_bottom: false
-    - file: /config/overlays/audience_rating.yml
-    - default: status
-      template_variables:
-        horizontal_align: center
-        vertical_align: bottom
-        vertical_offset: 23
-        horizontal_offset: 0
-        back_height: 149
-        back_width: 965
-        font: /config/overlays/fonts/Colus-Regular.ttf
-        font_size: 80
-        font_color_airing: '#27C24C'
-        font_color_returning: '#FFA500'
-        font_color_canceled: '#ED1F1F'
-        font_color_ended: '#FF0000'
-        back_color: '#00000000'
-    # Season Overlay
-    - file: /config/overlays/media_info.yml
-      template_variables:
-        builder_level: season
-        use_gradient_top: false
-        use_gradient_bottom: false
-    - file: /config/overlays/audience_rating.yml
-      template_variables:
-        builder_level: season
-    # Episode Overlay
-    - file: /config/overlays/media_info.yml
-      template_variables:
-        builder_level: episode
-        use_edition: false
-        use_gradient_top: true
-        use_gradient_bottom: true
-    - file: /config/overlays/audience_rating.yml
-      template_variables:
-        builder_level: episode
-    - default: runtimes
-      template_variables:
-        builder_level: episode
-        horizontal_offset: 225
-        text: ''
-        vertical_offset: 40
-        vertical_align: top
-        horizontal_align: left
-        back_align: center
-        back_width: 140
-        back_color: '#00000000'
-    - remove_overlays: false
+      - file: /config/overlays/media_info.yml
+        template_variables:
+          use_combined: false
+          use_audio: false
+          use_gradient_top: false
+          use_gradient_bottom: false
+      - file: /config/overlays/audience_rating.yml
+      - default: status
+        template_variables:
+          horizontal_align: center
+          vertical_align: bottom
+          vertical_offset: 23
+          horizontal_offset: 0
+          back_height: 149
+          back_width: 965
+          font: /config/overlays/fonts/Colus-Regular.ttf
+          font_size: 80
+          font_color_airing: "#27C24C"
+          font_color_returning: "#FFA500"
+          font_color_canceled: "#ED1F1F"
+          font_color_ended: "#FF0000"
+          back_color: "#00000000"
+      # Season Overlay
+      - file: /config/overlays/media_info.yml
+        template_variables:
+          builder_level: season
+          use_gradient_top: false
+          use_gradient_bottom: false
+      - file: /config/overlays/audience_rating.yml
+        template_variables:
+          builder_level: season
+      # Episode Overlay
+      - file: /config/overlays/media_info.yml
+        template_variables:
+          builder_level: episode
+          use_edition: false
+          use_gradient_top: true
+          use_gradient_bottom: true
+      - file: /config/overlays/audience_rating.yml
+        template_variables:
+          builder_level: episode
+      - default: runtimes
+        template_variables:
+          builder_level: episode
+          horizontal_offset: 225
+          text: ""
+          vertical_offset: 40
+          vertical_align: top
+          horizontal_align: left
+          back_align: center
+          back_width: 140
+          back_color: "#00000000"
+      - remove_overlays: false
     operations:
       <<: [*id001, *id002, *id003, *id004, *id005, *id006, *id007, *id008]
     sonarr: &sonarr
@@ -330,11 +340,11 @@ settings:
   show_missing_episode_assets: false
   show_asset_not_needed: true
   sync_mode: append
-  minimum_items: 2
+  minimum_items: 5
   default_collection_order:
   delete_below_minimum: true
   delete_not_scheduled: false
-  run_again_delay: 2
+  run_again_delay: 10
   missing_only_released: false
   missing_path: /config/missing
   show_unmanaged: true
@@ -347,14 +357,14 @@ settings:
   tvdb_language: eng
   ignore_ids:
   ignore_imdb_ids:
-  item_refresh_delay: 0
+  item_refresh_delay: 3
   playlist_sync_to_users: all
   playlist_exclude_users:
     run_order:
-    - operations
-    - metadata
-    - collections
-    - overlays
+      - operations
+      - metadata
+      - collections
+      - overlays
   overlay_artwork_quality: 85
   overlay_artwork_filetype: jpg
   playlist_report: false
@@ -362,10 +372,10 @@ settings:
   check_nightly: false
   show_unconfigured: true
   run_order:
-  - operations
-  - metadata
-  - collections
-  - overlays
+    - operations
+    - metadata
+    - collections
+    - overlays
   show_unfiltered: false
   custom_repo:
 plex:
@@ -373,11 +383,11 @@ plex:
   token: <<PLEX_API_KEY>>
   timeout: 60
   db_cache: 4096
-  clean_bundles: true
-  empty_trash: true
+  clean_bundles: false
+  empty_trash: false
   optimize: false
   verify_ssl: false
-tmdb: 
+tmdb:
   apikey: <<TMDB_API_KEY>>
   language: en
   cache_expiration: 60

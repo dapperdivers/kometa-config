@@ -1,0 +1,54 @@
+{
+  // Editor settings for YAML files
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.wordWrap": "on",
+    "editor.rulers": [200]
+  },
+  "[yml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode", 
+    "editor.formatOnSave": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.wordWrap": "on",
+    "editor.rulers": [200]
+  },
+  
+  // YAML language server settings for better validation
+  "yaml.schemas": {
+    "https://json.schemastore.org/yamllint.json": ".yamllint"
+  },
+  "yaml.validate": true,
+  "yaml.format.enable": true,
+  "yaml.format.singleQuote": false,
+  "yaml.format.bracketSpacing": true,
+  "yaml.format.proseWrap": "preserve",
+  "yaml.format.printWidth": 200,
+  
+  // File associations
+  "files.associations": {
+    "*.yml": "yaml",
+    "*.yaml": "yaml",
+    ".yamllint": "yaml"
+  },
+  
+  // Prettier extension settings
+  "prettier.requireConfig": true,
+  "prettier.configPath": ".prettierrc.yml",
+  
+  // Optional: Red Hat YAML extension settings (if you have it installed)
+  "redhat.telemetry.enabled": false,
+  "yaml.maxItemsComputed": 10000,
+  
+  // Exclude large directories from watch
+  "files.watcherExclude": {
+    "**/logs/**": true,
+    "**/overlays/4k-Movies Original Posters/**": true,
+    "**/overlays/4k-TV Shows Original Posters/**": true
+  }
+}

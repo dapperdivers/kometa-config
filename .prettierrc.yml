@@ -1,0 +1,24 @@
+# Prettier configuration for YAML formatting
+# Optimized for Kometa configuration files
+# Aligned with .yamllint rules for consistency
+
+# Core formatting
+tabWidth: 2
+useTabs: false
+printWidth: 200
+endOfLine: lf
+proseWrap: preserve
+
+# YAML-specific settings aligned with yamllint
+bracketSpacing: false # Matches yamllint brackets rule (no spaces inside)
+singleQuote: false # Use double quotes consistently in YAML
+
+# File-specific overrides
+overrides:
+  - files: ["*.yml", "*.yaml"]
+    options:
+      # YAML files use double quotes and no bracket spacing
+      singleQuote: false
+      bracketSpacing: false
+      # Ensure proper YAML formatting
+      parser: yaml
