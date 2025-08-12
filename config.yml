@@ -243,13 +243,13 @@ libraries: # This is called out once within the config.yml file
           - mdb_commonsense # Changes Content Rating to "1", "2" etc. to specify appropriate age
           - omdb # Changes Content Rating from omdb if not found on mdb_commonsense
       - &id007
-        schedule: quarterly(01/01)
+        schedule: yearly(01/01)
         mass_studio_update:
           - tmdb
           - tvdb
           - omdb # Update all studios from tmdb
       - &id008
-        schedule: quarterly(04/01)
+        schedule: yearly(04/01)
         mass_originally_available_update:
           - tmdb # Update all original available date from tmdb
           - tvdb # Update all original available date from tvdb if not from tmdb
@@ -484,11 +484,12 @@ settings:
   check_nightly: false
   show_unconfigured: true
   show_unfiltered: false
+  ignore_empty_smart_collections: true
   custom_repo:
 plex:
   url: <<PLEX_HOST>>
   token: <<PLEX_API_KEY>>
-  timeout: 60
+  timeout: 120
   db_cache: 4096
   clean_bundles: false
   empty_trash: false
@@ -518,6 +519,7 @@ trakt:
     refresh_token: <<TRAKT_REFRESH_TOKEN>>
     scope: public
     created_at: <<TRAKT_CREATED_AT>>
+  force_refresh: false
   pin:
 # notifiarr:
 #   API_KEY: <<NOTIFIARR_API_KEY>>
