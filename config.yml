@@ -268,7 +268,7 @@ libraries: # This is called out once within the config.yml file
   TV Shows: &tv_config
     settings:
       <<: *kometa_settings
-      asset_directory: /assets/4k-TV Shows
+      asset_directory: /assets/TV Shows
     run_order: *run_order
     template_variables:
       sep_style: gray # use the gray separators globally for this library
@@ -281,17 +281,61 @@ libraries: # This is called out once within the config.yml file
       - git: bullmoose20/tv_refresh # Tells plex to refresh media items added within the last 7 days
       - default: separator_award # An "index card"
       - default: pca # People's Choice Awards
+        schedule: range(11/01-12/31)  # PCA season
+        template_variables:
+          visible_home: range(11/01-12/31)
+          visible_shared: range(11/01-12/31)
       - default: choice # Critic's Choice Awards
+        schedule: range(01/01-02/15)  # Critics Choice season
+        template_variables:
+          visible_home: range(01/01-02/15)
+          visible_shared: range(01/01-02/15)
       - default: golden # Golden Globes Awards
+        schedule: range(12/01-01/31)  # Golden Globes season
+        template_variables:
+          visible_home: range(12/01-01/31)
+          visible_shared: range(12/01-01/31)
       - default: emmy # Emmy Awards
+        schedule: range(08/01-10/15)  # Emmy season
+        template_variables:
+          visible_home: range(08/01-10/15)
+          visible_shared: range(08/01-10/15)
       - default: separator_chart # An "index card"
       - default: anilist # AniDB Charts (Popular, Trending, etc.)
+        schedule: weekly(sunday|monday|tuesday)
+        template_variables:
+          visible_home: daily
+          visible_shared: daily
       - default: imdb # IMDb Charts (Popular, Trending, etc.)
+        schedule: weekly(sunday|monday|tuesday)
+        template_variables:
+          visible_home: daily
+          visible_shared: daily
       - default: myanimelist # MAL Charts (Popular, Trending, etc.)
+        schedule: weekly(tuesday|wednesday|thursday)
+        template_variables:
+          visible_home: daily
+          visible_shared: daily
       - default: other_chart # Other Charts (Popular, Trending, etc.)
+        schedule: daily
+        template_variables:
+          visible_home: daily
+          visible_shared: daily
       - default: tautulli # Tautulli Charts (Popular, Trending, etc.)
+        schedule: weekly(tuesday|wednesday|thursday)
+        template_variables:
+          visible_home: daily
+          visible_shared: daily
       - default: tmdb # TMDb Charts (Popular, Trending, etc.)
+        schedule: weekly(thursday|friday|saturday)
+        template_variables:
+          visible_home: daily
+          visible_shared: daily
       - default: trakt # Trakt Charts (Popular, Trending, etc.)
+        schedule: weekly(friday|saturday|sunday)
+        template_variables:
+          visible_home: daily
+          visible_shared: daily
       - default: basic # Some basic chart collections based on recently released media in your library
       - default: collectionless # Collectionless collection to help Show/Hide Movies/Shows properly in your library
       - default: actor
@@ -428,11 +472,11 @@ settings:
   item_refresh_delay: 3
   playlist_sync_to_users: all
   playlist_exclude_users:
-    run_order:
-      - operations
-      - metadata
-      - collections
-      - overlays
+  run_order:
+    - operations
+    - metadata
+    - collections
+    - overlays
   overlay_artwork_quality: 85
   overlay_artwork_filetype: jpg
   playlist_report: false

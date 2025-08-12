@@ -78,11 +78,10 @@ grep -i warning logs/meta.log
 - `schedule` option controls when Kometa processes a collection (NOT when Kometa runs)
 - Collections with no `schedule` default to `daily`
 - `visible_home` and `visible_shared` only work if the collection processes when Kometa runs
-- **Critical Rule**: `schedule` should either match `visible_*` options OR run more often than the `visible_*` options
+- **Critical Rule**: `schedule` should run more often than the `visible_*` options
 - **Problem Example**: `schedule: monthly(8)` but `visible_home: weekly(tuesday)` will skip processing on most Tuesdays
 - **Community Best Practices**:
-  1. **Perfect Alignment**: `schedule: range(11/01-12/31)` + `visible_home: range(11/01-12/31)`
-  2. **Multi-Day Weekly**: `schedule: weekly(monday)` + `visible_home: daily`
+  2. **Multi-Day Weekly**: `schedule: daily` + `visible_home: weekly(monday)`
   3. **Broad Scheduling Window**: `schedule: weekly(monday|tuesday|wednesday)` + `visible_home: weekly(tuesday)`
 - **Preferred solution**: Use broader scheduling windows around visibility days to ensure collection processes when needed
 
