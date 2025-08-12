@@ -483,11 +483,6 @@ settings:
   verify_ssl: true
   check_nightly: false
   show_unconfigured: true
-  run_order:
-    - operations
-    - metadata
-    - collections
-    - overlays
   show_unfiltered: false
   custom_repo:
 plex:
