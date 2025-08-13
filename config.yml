@@ -5,9 +5,9 @@ libraries: # This is called out once within the config.yml file
       prioritize_assets: true
       minimum_items: 5
     run_order: &run_order
+      - operations
       - collections
       - metadata
-      - operations
       - overlays
     template_variables:
       sep_style: gray # use the gray separators globally for this library
@@ -44,7 +44,7 @@ libraries: # This is called out once within the config.yml file
           visible_home: range(09/01-10/15)
           visible_shared: range(09/01-10/15)
       - default: bafta # BAFTA Awards
-        schedule: range(01/01-02/28)  # BAFTA season  
+        schedule: range(01/01-02/28)  # BAFTA season
         template_variables:
           visible_home: range(01/01-02/28)
           visible_shared: range(01/01-02/28)
@@ -124,38 +124,38 @@ libraries: # This is called out once within the config.yml file
           tmdb_birthday:
             this_month: true
       - default: actor # Actors
-        schedule: range(01/01-01/31,05/01-05/31,09/01-09/30)  # Months 1,5,9
+        schedule: range(01/01-01/31),range(05/01-05/31),range(09/01-09/30)  # Months 1,5,9
         template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
-          visible_home: range(01/01-01/31,05/01-05/31,09/01-09/30)
-          visible_shared: range(01/01-01/31,05/01-05/31,09/01-09/30)
+          visible_home: range(01/01-01/31),range(05/01-05/31),range(09/01-09/30)
+          visible_shared: range(01/01-01/31),range(05/01-05/31),range(09/01-09/30)
           data:
             depth: 1
             limit: 15
       - default: director # Directors
-        schedule: range(02/01-02/28,06/01-06/30,10/01-10/31)  # Months 2,6,10
+        schedule: range(02/01-02/28),range(06/01-06/30),range(10/01-10/31)  # Months 2,6,10
         template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
-          visible_home: range(02/01-02/28,06/01-06/30,10/01-10/31)
-          visible_shared: range(02/01-02/28,06/01-06/30,10/01-10/31)
+          visible_home: range(02/01-02/28),range(06/01-06/30),range(10/01-10/31)
+          visible_shared: range(02/01-02/28),range(06/01-06/30),range(10/01-10/31)
           data:
             depth: 1
             limit: 15
       - default: producer # Producers
-        schedule: range(03/01-03/31,07/01-07/31,11/01-11/30)  # Months 3,7,11
+        schedule: range(03/01-03/31),range(07/01-07/31),range(11/01-11/30)  # Months 3,7,11
         template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
-          visible_home: range(03/01-03/31,07/01-07/31,11/01-11/30)
-          visible_shared: range(03/01-03/31,07/01-07/31,11/01-11/30)
+          visible_home: range(03/01-03/31),range(07/01-07/31),range(11/01-11/30)
+          visible_shared: range(03/01-03/31),range(07/01-07/31),range(11/01-11/30)
           data:
             depth: 1
             limit: 15
       - default: writer # Writers
-        schedule: range(04/01-04/30,08/01-08/31,12/01-12/31)  # Months 4,8,12
+        schedule: range(04/01-04/30),range(08/01-08/31),range(12/01-12/31)  # Months 4,8,12
         template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
-          visible_home: range(04/01-04/30,08/01-08/31,12/01-12/31)
-          visible_shared: range(04/01-04/30,08/01-08/31,12/01-12/31)
+          visible_home: range(04/01-04/30),range(08/01-08/31),range(12/01-12/31)
+          visible_shared: range(04/01-04/30),range(08/01-08/31),range(12/01-12/31)
           data:
             depth: 1
             limit: 15
@@ -458,7 +458,7 @@ settings:
   delete_not_scheduled: false
   run_again_delay: 10
   missing_only_released: false
-  missing_path: /config/missing
+  report_path: /config/missing
   show_unmanaged: true
   show_filtered: false
   show_options: false
@@ -521,5 +521,16 @@ trakt:
     created_at: <<TRAKT_CREATED_AT>>
   force_refresh: false
   pin:
-# notifiarr:
-#   API_KEY: <<NOTIFIARR_API_KEY>>
+# Notification services (commented out but defined to suppress warnings)
+notifiarr:
+#  apikey: <<NOTIFIARR_API_KEY>>
+gotify:
+#  url: <<GOTIFY_URL>>
+#  token: <<GOTIFY_TOKEN>>
+ntfy:
+#  url: <<NTFY_URL>>
+mal:
+#  client_id: <<MAL_CLIENT_ID>>
+#  client_secret: <<MAL_CLIENT_SECRET>>
+playlist_files:
+#  - file: path/to/playlist.yml
