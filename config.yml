@@ -5,81 +5,80 @@ libraries: # This is called out once within the config.yml file
       prioritize_assets: true
       minimum_items: 5
     run_order: &run_order
-      - operations
       - collections
       - metadata
+      - operations
       - overlays
     template_variables:
       sep_style: gray # use the gray separators globally for this library
       collection_mode: show # hide the collections
       language: en # could be default(which is en), da, de, fr, pt-br or another lang code that we have translated
       placeholder_imdb_id: tt8579674 # 1917 (2019) placeholder id for the separators
-    collection_files: &movie_collections
-      # Movie Subgenre Collections - Split into categories for better organization
-      - file: /config/custom/movie_subgenre/action_adventure.yml        # Monday schedule
-      - file: /config/custom/movie_subgenre/comedy_satire.yml           # Tuesday schedule
-      - file: /config/custom/movie_subgenre/crime_thriller.yml          # Tuesday schedule
-      - file: /config/custom/movie_subgenre/fantasy_supernatural.yml    # Wednesday schedule
-      - file: /config/custom/movie_subgenre/horror_occult.yml           # Wednesday schedule
-      - file: /config/custom/movie_subgenre/sci_fi_futuristic.yml       # Thursday schedule
-      - file: /config/custom/movie_subgenre/historical_period.yml       # Thursday schedule
-      - file: /config/custom/movie_subgenre/romance_drama.yml           # Friday schedule
-      - file: /config/custom/movie_subgenre/exploitation_niche.yml      # Friday schedule
-      - file: /config/custom/movie_subgenre/experimental_artistic.yml   # Saturday schedule
+    collection_files: &movie_collections # Movie Subgenre Collections - Split into categories for better organization
+      - file: /config/custom/movie_subgenre/action_adventure.yml # Monday schedule
+      - file: /config/custom/movie_subgenre/comedy_satire.yml # Tuesday schedule
+      - file: /config/custom/movie_subgenre/crime_thriller.yml # Tuesday schedule
+      - file: /config/custom/movie_subgenre/fantasy_supernatural.yml # Wednesday schedule
+      - file: /config/custom/movie_subgenre/horror_occult.yml # Wednesday schedule
+      - file: /config/custom/movie_subgenre/sci_fi_futuristic.yml # Thursday schedule
+      - file: /config/custom/movie_subgenre/historical_period.yml # Thursday schedule
+      - file: /config/custom/movie_subgenre/romance_drama.yml # Friday schedule
+      - file: /config/custom/movie_subgenre/exploitation_niche.yml # Friday schedule
+      - file: /config/custom/movie_subgenre/experimental_artistic.yml # Saturday schedule
       - default: based # collections based on a book, comic, story, video game
       - default: separator_award # An "index card"
       - default: pca # People's Choice Awards
-        schedule: range(11/01-12/31)  # PCA season
+        schedule: range(11/01-12/31) # PCA season
         template_variables:
           visible_home: range(11/01-12/31)
           visible_shared: range(11/01-12/31)
       - default: sag # Screen Actors Guild Awards
-        schedule: range(01/15-02/15)  # SAG season
+        schedule: range(01/15-02/15) # SAG season
         template_variables:
           visible_home: range(01/15-02/15)
           visible_shared: range(01/15-02/15)
       - default: tiff # Toronto International Film Festival Awards
-        schedule: range(09/01-10/15)  # TIFF season
+        schedule: range(09/01-10/15) # TIFF season
         template_variables:
           visible_home: range(09/01-10/15)
           visible_shared: range(09/01-10/15)
       - default: bafta # BAFTA Awards
-        schedule: range(01/01-02/28)  # BAFTA season
+        schedule: range(01/01-02/28) # BAFTA season
         template_variables:
           visible_home: range(01/01-02/28)
           visible_shared: range(01/01-02/28)
       - default: cannes # Cannes Film Festival Awards
-        schedule: range(05/01-06/15)  # Cannes season
+        schedule: range(05/01-06/15) # Cannes season
         template_variables:
           visible_home: range(05/01-06/15)
           visible_shared: range(05/01-06/15)
       - default: choice # Critic's Choice Awards
-        schedule: range(01/01-02/15)  # Critics Choice season
+        schedule: range(01/01-02/15) # Critics Choice season
         template_variables:
           visible_home: range(01/01-02/15)
           visible_shared: range(01/01-02/15)
       - default: emmy # Emmy Awards
-        schedule: range(08/01-10/15)  # Emmy season
+        schedule: range(08/01-10/15) # Emmy season
         template_variables:
           visible_home: range(08/01-10/15)
           visible_shared: range(08/01-10/15)
       - default: golden # Golden Globes Awards
-        schedule: range(12/01-01/31)  # Golden Globes season
+        schedule: range(12/01-01/31) # Golden Globes season
         template_variables:
           visible_home: range(12/01-01/31)
           visible_shared: range(12/01-01/31)
       - default: oscars # The Oscars
-        schedule: range(02/01-04/15)  # Oscar season
+        schedule: range(02/01-04/15) # Oscar season
         template_variables:
           visible_home: range(02/01-04/15)
           visible_shared: range(02/01-04/15)
       - default: spirit # Independent Spirit Awards
-        schedule: range(02/15-03/31)  # Spirit Awards season
+        schedule: range(02/15-03/31) # Spirit Awards season
         template_variables:
           visible_home: range(02/15-03/31)
           visible_shared: range(02/15-03/31)
       - default: sundance # Sundance Film Festival Awards
-        schedule: range(01/15-02/15)  # Sundance season
+        schedule: range(01/15-02/15) # Sundance season
         template_variables:
           visible_home: range(01/15-02/15)
           visible_shared: range(01/15-02/15)
@@ -90,12 +89,12 @@ libraries: # This is called out once within the config.yml file
           visible_home: daily
           visible_shared: daily
       - default: other_chart # Other Charts (Popular, Trending, etc.)
-        schedule: daily  # Pirated content updates daily
+        schedule: daily # Pirated content updates daily
         template_variables:
           use_pirated: true
           visible_home_pirated: true
           visible_shared_pirated: true
-          visible_home: daily  # Always visible
+          visible_home: daily # Always visible
           visible_shared: daily
       - default: tautulli # Tautulli Charts (Popular, Trending, etc.)
         schedule: weekly(tuesday|wednesday|thursday)
@@ -124,7 +123,7 @@ libraries: # This is called out once within the config.yml file
           tmdb_birthday:
             this_month: true
       - default: actor # Actors
-        schedule: range(01/01-01/31),range(05/01-05/31),range(09/01-09/30)  # Months 1,5,9
+        schedule: range(01/01-01/31),range(05/01-05/31),range(09/01-09/30) # Months 1,5,9
         template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
           visible_home: range(01/01-01/31),range(05/01-05/31),range(09/01-09/30)
@@ -133,7 +132,7 @@ libraries: # This is called out once within the config.yml file
             depth: 1
             limit: 15
       - default: director # Directors
-        schedule: range(02/01-02/28),range(06/01-06/30),range(10/01-10/31)  # Months 2,6,10
+        schedule: range(02/01-02/28),range(06/01-06/30),range(10/01-10/31) # Months 2,6,10
         template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
           visible_home: range(02/01-02/28),range(06/01-06/30),range(10/01-10/31)
@@ -142,7 +141,7 @@ libraries: # This is called out once within the config.yml file
             depth: 1
             limit: 15
       - default: producer # Producers
-        schedule: range(03/01-03/31),range(07/01-07/31),range(11/01-11/30)  # Months 3,7,11
+        schedule: range(03/01-03/31),range(07/01-07/31),range(11/01-11/30) # Months 3,7,11
         template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
           visible_home: range(03/01-03/31),range(07/01-07/31),range(11/01-11/30)
@@ -151,7 +150,7 @@ libraries: # This is called out once within the config.yml file
             depth: 1
             limit: 15
       - default: writer # Writers
-        schedule: range(04/01-04/30),range(08/01-08/31),range(12/01-12/31)  # Months 4,8,12
+        schedule: range(04/01-04/30),range(08/01-08/31),range(12/01-12/31) # Months 4,8,12
         template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
           visible_home: range(04/01-04/30),range(08/01-08/31),range(12/01-12/31)
@@ -281,22 +280,22 @@ libraries: # This is called out once within the config.yml file
       - git: bullmoose20/tv_refresh # Tells plex to refresh media items added within the last 7 days
       - default: separator_award # An "index card"
       - default: pca # People's Choice Awards
-        schedule: range(11/01-12/31)  # PCA season
+        schedule: range(11/01-12/31) # PCA season
         template_variables:
           visible_home: range(11/01-12/31)
           visible_shared: range(11/01-12/31)
       - default: choice # Critic's Choice Awards
-        schedule: range(01/01-02/15)  # Critics Choice season
+        schedule: range(01/01-02/15) # Critics Choice season
         template_variables:
           visible_home: range(01/01-02/15)
           visible_shared: range(01/01-02/15)
       - default: golden # Golden Globes Awards
-        schedule: range(12/01-01/31)  # Golden Globes season
+        schedule: range(12/01-01/31) # Golden Globes season
         template_variables:
           visible_home: range(12/01-01/31)
           visible_shared: range(12/01-01/31)
       - default: emmy # Emmy Awards
-        schedule: range(08/01-10/15)  # Emmy season
+        schedule: range(08/01-10/15) # Emmy season
         template_variables:
           visible_home: range(08/01-10/15)
           visible_shared: range(08/01-10/15)
@@ -458,7 +457,7 @@ settings:
   delete_not_scheduled: false
   run_again_delay: 10
   missing_only_released: false
-  report_path: /config/missing
+  missing_path: /config/missing
   show_unmanaged: true
   show_filtered: false
   show_options: false
@@ -523,14 +522,14 @@ trakt:
   pin:
 # Notification services (commented out but defined to suppress warnings)
 notifiarr:
-#  apikey: <<NOTIFIARR_API_KEY>>
+  apikey: <<NOTIFIARR_API_KEY>>
 gotify:
-#  url: <<GOTIFY_URL>>
-#  token: <<GOTIFY_TOKEN>>
+  url: <<GOTIFY_URL>>
+  token: <<GOTIFY_TOKEN>>
 ntfy:
-#  url: <<NTFY_URL>>
+  url: <<NTFY_URL>>
 mal:
-#  client_id: <<MAL_CLIENT_ID>>
-#  client_secret: <<MAL_CLIENT_SECRET>>
+  client_id: <<MAL_CLIENT_ID>>
+  client_secret: <<MAL_CLIENT_SECRET>>
 playlist_files:
 #  - file: path/to/playlist.yml
