@@ -82,9 +82,9 @@ collections:
     template:
       keyword: "chick-flick"
       language: "en"
-      letterboxd_list_details_url_1: "https://letterboxd.com/akookieforyou/list/chick-flicks/by/rating/"
+      letterboxd_list_details_url_1: "https://letterboxd.com/marialuisacctc/list/women-have-superior-taste-that-is-why-these/by/rating/"
       letterboxd_list_details_limit_1: 250
-      letterboxd_list_details_url_2: "https://letterboxd.com/marialuisacctc/list/women-have-superior-taste-that-is-why-these/by/rating/"
+      letterboxd_list_details_url_2: "https://letterboxd.com/darkestparadise/list/definition-of-girly-classics/by/rating/"
       letterboxd_list_details_limit_2: 250
       letterboxd_list: "theme-chick-flick"
       name: sub_genre
