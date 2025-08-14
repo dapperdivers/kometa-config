@@ -490,8 +490,8 @@ settings:
 plex:
   url: <<PLEX_HOST>>
   token: <<PLEX_API_KEY>>
-  timeout: 120
-  db_cache: 4096
+  timeout: 360
+  db_cache: 2048
   clean_bundles: false
   empty_trash: false
   optimize: false
@@ -511,6 +511,7 @@ mdblist:
   apikey: <<MDBLIST_API_KEY>>
   cache_expiration: 60
 trakt:
+  cache_expiration: 60
   force_refresh: false
   client_id: <<TRAKT_CLIENT_ID>>
   client_secret: <<TRAKT_CLIENT_SECRET>>
