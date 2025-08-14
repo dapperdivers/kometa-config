@@ -470,7 +470,7 @@ settings:
   tvdb_language: eng
   ignore_ids:
   ignore_imdb_ids:
-  item_refresh_delay: 3
+  item_refresh_delay: 1
   playlist_sync_to_users: all
   playlist_exclude_users:
   run_order:
