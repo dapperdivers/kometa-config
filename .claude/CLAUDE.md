@@ -112,6 +112,31 @@ grep -i warning logs/meta.log
 3. **Indentation**: Inconsistent indentation in some template blocks
 4. **Playlist Settings**: Misplaced `run_order` block under `playlist_exclude_users`
 
+### Range Schedule Syntax - CRITICAL FINDINGS
+**Issue**: Multiple range() functions in a single schedule parameter cause parsing errors.
+
+**❌ INCORRECT SYNTAX** (causes "failed to parse schedule" errors):
+```yaml
+schedule: range(01/01-01/31,05/01-05/31,09/01-09/30)  # Commas inside parentheses fail
+```
+
+**✅ CORRECT SYNTAX** (multiple ranges using pipe separator):
+```yaml
+schedule: range(01/01-01/31|05/01-05/31|09/01-09/30)  # Use pipes, not commas
+```
+
+**✅ ALTERNATIVE CORRECT SYNTAX** (separate range functions):
+```yaml
+schedule: range(01/01-01/31),range(05/01-05/31),range(09/01-09/30)  # Separate functions
+```
+
+**Root Cause**: Kometa's schedule parser expects either:
+1. Single range with pipe-separated periods: `range(period1|period2|period3)`
+2. Multiple range functions: `range(period1),range(period2),range(period3)`
+3. NOT comma-separated periods within single parentheses
+
+This syntax error affects all actor, director, producer, and writer collection schedules that use quarterly rotation patterns.
+
 ## API Integrations
 The configuration integrates with multiple services requiring API keys:
 - **Plex**: Media server (`<<PLEX_HOST>>`, `<<PLEX_API_KEY>>`)
