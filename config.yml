@@ -491,7 +491,7 @@ plex:
   url: <<PLEX_HOST>>
   token: <<PLEX_API_KEY>>
   timeout: 360
-  db_cache: 2048
+  db_cache: 4096
   clean_bundles: false
   empty_trash: false
   optimize: false
