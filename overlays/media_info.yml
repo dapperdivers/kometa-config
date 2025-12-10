@@ -98,12 +98,16 @@ external_templates:
         default: 50
         conditions:
           - type: edition
+            res: 4K
             value: 186
+          - type: edition
+            res: 1080p
+            value: 202
       vertical_offset:
         default: 50
         conditions:
           - type: edition
-            value: 100
+            value: 115
       group:
         conditions:
           - type: [resolution, edition]
