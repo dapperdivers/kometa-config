@@ -11,7 +11,7 @@ libraries: # This is called out once within the config.yml file
       - overlays
     template_variables:
       sep_style: gray # use the gray separators globally for this library
-      collection_mode: show # hide the collections
+      collection_mode: hide # hide the collections
       language: en # could be default(which is en), da, de, fr, pt-br or another lang code that we have translated
       placeholder_imdb_id: tt8579674 # 1917 (2019) placeholder id for the separators
     collection_files: # Movie Subgenre Collections - Split into categories for better organization
@@ -85,7 +85,7 @@ libraries: # This is called out once within the config.yml file
           visible_shared: range(01/15-02/15)
       - default: separator_chart # An "index card"
       - default: imdb # IMDb Charts (Popular, Trending, etc.)
-        schedule: weekly(sunday|monday|tuesday)
+        schedule: weekly(saturday|sunday|monday|tuesday|wednesday)
         template_variables: &daily_visibility
           visible_home: daily
           visible_shared: daily
@@ -97,10 +97,10 @@ libraries: # This is called out once within the config.yml file
           visible_home_pirated: true
           visible_shared_pirated: true
       - default: tautulli # Tautulli Charts (Popular, Trending, etc.)
-        schedule: weekly(tuesday|wednesday|thursday)
+        schedule: weekly(monday|tuesday|wednesday|thursday|friday)
         template_variables: *daily_visibility
       - default: tmdb # TMDb Charts (Popular, Trending, etc.)
-        schedule: weekly(thursday|friday|saturday)
+        schedule: weekly(wednesday|thursday|friday|saturday|sunday)
         template_variables: *daily_visibility
       - default: basic # Some basic chart collections based on recently released media in your library
         schedule: weekly(sunday)
@@ -157,11 +157,11 @@ libraries: # This is called out once within the config.yml file
             depth: 1
             limit: 15
       - default: genre # Action, Comedy, Drama, etc.
-        schedule: weekly(tuesday)
+        schedule: weekly(monday|tuesday|wednesday)
       - default: studio # DreamWorks Studios, Lucasfilm Ltd, etc.
-        schedule: weekly(wednesday)
+        schedule: weekly(tuesday|wednesday|thursday)
       - default: decade # Decade the media item was released
-        schedule: weekly(thursday)
+        schedule: weekly(wednesday|thursday|friday)
       - git: bullmoose20/separator_franchise # Separator for franchise
         template_variables:
           collection_section: "035" # Set to "035" to be right before universe. Should be the same here and below
@@ -275,7 +275,7 @@ libraries: # This is called out once within the config.yml file
     run_order: *run_order
     template_variables:
       sep_style: gray # use the gray separators globally for this library
-      collection_mode: show # hide the collections
+      collection_mode: hide # hide the collections
       language: en # could be default(which is en), da, de, fr, pt-br or another lang code that we have translated
       placeholder_imdb_id: tt1190634 # The Boys (2019) placeholder id for the separators
     collection_files: # These files contain collections: and/or dynamic_collections attributes
@@ -307,25 +307,25 @@ libraries: # This is called out once within the config.yml file
           visible_shared: range(08/01-10/15)
       - default: separator_chart # An "index card"
       - default: anilist # AniDB Charts (Popular, Trending, etc.)
-        schedule: weekly(sunday|monday|tuesday)
+        schedule: weekly(saturday|sunday|monday|tuesday|wednesday)
         template_variables: *daily_visibility
       - default: imdb # IMDb Charts (Popular, Trending, etc.)
-        schedule: weekly(sunday|monday|tuesday)
+        schedule: weekly(saturday|sunday|monday|tuesday|wednesday)
         template_variables: *daily_visibility
       - default: myanimelist # MAL Charts (Popular, Trending, etc.)
-        schedule: weekly(tuesday|wednesday|thursday)
+        schedule: weekly(monday|tuesday|wednesday|thursday|friday)
         template_variables: *daily_visibility
       - default: other_chart # Other Charts (Popular, Trending, etc.)
         schedule: daily
         template_variables: *daily_visibility
       - default: tautulli # Tautulli Charts (Popular, Trending, etc.)
-        schedule: weekly(tuesday|wednesday|thursday)
+        schedule: weekly(monday|tuesday|wednesday|thursday|friday)
         template_variables: *daily_visibility
       - default: tmdb # TMDb Charts (Popular, Trending, etc.)
-        schedule: weekly(thursday|friday|saturday)
+        schedule: weekly(wednesday|thursday|friday|saturday|sunday)
         template_variables: *daily_visibility
       - default: trakt # Trakt Charts (Popular, Trending, etc.)
-        schedule: weekly(friday|saturday|sunday)
+        schedule: weekly(thursday|friday|saturday|sunday|monday)
         template_variables: *daily_visibility
       - default: basic # Some basic chart collections based on recently released media in your library
         schedule: weekly(sunday)
@@ -353,11 +353,11 @@ libraries: # This is called out once within the config.yml file
             depth: 1
             limit: 15
       - default: genre # Action, Comedy, Drama, etc.
-        schedule: weekly(tuesday)
+        schedule: weekly(monday|tuesday|wednesday)
       - default: studio # DreamWorks Studios, Lucasfilm Ltd, etc.
-        schedule: weekly(wednesday)
+        schedule: weekly(tuesday|wednesday|thursday)
       - default: decade # Decade the media item was released
-        schedule: weekly(thursday)
+        schedule: weekly(wednesday|thursday|friday)
       - git: bullmoose20/separator_franchise # Separator for franchise
         template_variables:
           collection_section: "035" # Set to "035" to be right before universe. Should be the same here and below
