@@ -204,13 +204,13 @@ libraries: # This is called out once within the config.yml file
       - default: mediastinger
         template_variables:
           horizontal_align: left
-          horizontal_offset: 60
-          vertical_offset: 150
+          horizontal_offset: 50
+          vertical_offset: 100
       - default: runtimes
         template_variables:
-          horizontal_offset: 225
+          horizontal_offset: 186
           text: ""
-          vertical_offset: 40
+          vertical_offset: 50
           vertical_align: top
           horizontal_align: left
           back_align: center
@@ -398,6 +398,9 @@ libraries: # This is called out once within the config.yml file
       - file: /config/overlays/media_info.yml
         template_variables:
           builder_level: season
+          use_combined: false
+          use_video: false
+          use_audio: false
           use_gradient_top: false
           use_gradient_bottom: false
       - file: /config/overlays/audience_rating.yml
