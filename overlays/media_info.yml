@@ -107,7 +107,7 @@ external_templates:
         default: 50
         conditions:
           - type: edition
-            value: 115
+            value: 50
       group:
         conditions:
           - type: [resolution, edition]

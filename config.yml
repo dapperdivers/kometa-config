@@ -205,12 +205,12 @@ libraries: # This is called out once within the config.yml file
         template_variables:
           horizontal_align: left
           horizontal_offset: 50
-          vertical_offset: 115
+          vertical_offset: 190
       - default: runtimes
         template_variables:
-          horizontal_offset: 200
+          horizontal_offset: 70
           text: ""
-          vertical_offset: 50
+          vertical_offset: 100
           vertical_align: top
           horizontal_align: left
           back_align: center
