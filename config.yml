@@ -1,5 +1,6 @@
 libraries: # This is called out once within the config.yml file
   Movies:
+    schedule_overlays: weekly(sunday) # run the overlay pass weekly; existing overlays stay put on other days
     settings: &kometa_settings
       asset_directory: /assets/Movies
       prioritize_assets: true
@@ -269,6 +270,7 @@ libraries: # This is called out once within the config.yml file
       availability: announced
       quality_profile: HD Bluray + WEB
   TV Shows:
+    schedule_overlays: weekly(sunday|wednesday) # episode overlays are the expensive pass; run it 2x/week, leave overlays in place otherwise
     settings:
       <<: *kometa_settings
       asset_directory: /assets/TV Shows
@@ -447,11 +449,11 @@ settings:
   cache_expiration: 60
   asset_directory: /assets
   asset_folders: true
-  create_asset_folders: true
+  create_asset_folders: false # posterizarr manages posters; skip folder-creation I/O on CephFS
   asset_depth: 0
   prioritize_assets: false
   dimensional_asset_rename: false
-  download_url_assets: true
+  download_url_assets: false # posterizarr already downloads posters; avoids redundant asset work
   show_missing_season_assets: false
   show_missing_episode_assets: false
   show_asset_not_needed: true
@@ -467,13 +469,13 @@ settings:
   show_filtered: false
   show_options: false
   show_missing: false
-  show_missing_assets: true
+  show_missing_assets: false # reduce log churn
   only_filter_missing: false
   save_report: true
   tvdb_language: eng
   ignore_ids:
   ignore_imdb_ids:
-  item_refresh_delay: 1
+  item_refresh_delay: 0 # was 1: removed per-item sleep across thousands of items
   playlist_sync_to_users: all
   playlist_exclude_users:
   run_order:
