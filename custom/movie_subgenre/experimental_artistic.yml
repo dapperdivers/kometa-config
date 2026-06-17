@@ -1,265 +1,148 @@
 external_templates:
   - file: /config/custom/templates/movie_subgenre_template.yml
 
+# Per-file constants live in the &sched / &tmpl anchors defined on the first
+# collection below; every other collection merges them with `<<: *tmpl` and only
+# declares what differs (keyword/letterboxd_list, and rating/votes overrides).
 collections:
   Absurdism:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_absurdism.png
-    schedule: weekly(friday|saturday|sunday)
-    #summary: "Top rated movies in Absurdism"
+    schedule: &sched weekly(friday|saturday|sunday)
     template:
+      <<: &tmpl
+        name: sub_genre
+        rating.gte: 5
+        votes.gte: 1000
+        visible_home: weekly(saturday)
+        visible_shared: weekly(saturday)
       keyword: "absurdism"
-      language: "en"
       letterboxd_list: "theme-absurdism"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(saturday)
-      visible_shared: weekly(saturday)
-      votes.gte: 1000
 
   Conspiracy:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_conspiracy.png
-    schedule: weekly(friday|saturday|sunday)
-    #summary: "Top rated movies in Conspiracy"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "conspiracy"
-      language: "en"
       letterboxd_list: "theme-conspiracy"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(saturday)
-      visible_shared: weekly(saturday)
-      votes.gte: 1000
 
   Disaster:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_disaster.png
-    schedule: weekly(friday|saturday|sunday)
-    #summary: "Top rated movies in Disaster"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "disaster,disaster-film"
-      language: "en"
       letterboxd_list: "theme-disaster"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(saturday)
-      visible_shared: weekly(saturday)
-      votes.gte: 1000
 
   Experimental:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_experimental.png
-    schedule: weekly(friday|saturday|sunday)
-    #summary: "Top rated movies in Experimental"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "experimental-film"
-      language: "en"
       letterboxd_list: "theme-experimental"
-      name: sub_genre
       rating.gte: 3
-      type: "movie,tv_movie"
-      visible_home: weekly(saturday)
-      visible_shared: weekly(saturday)
-      votes.gte: 1000
 
   Medical:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_medical.png
-    schedule: weekly(friday|saturday|sunday)
-    #summary: "Top rated movies in Medical"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "medical"
-      language: "en"
       letterboxd_list: "theme-medical"
-      name: sub_genre
       rating.gte: 2
-      type: "movie,tv_movie"
-      visible_home: weekly(saturday)
-      visible_shared: weekly(saturday)
       votes.gte: 100
 
   Mind-Bend:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_mindfuck.png
-    schedule: weekly(friday|saturday|sunday)
-    #summary: "Top rated movies in Mindfuck"
+    schedule: *sched
     template:
+      <<: *tmpl
       imdb_extra_1: "https://www.imdb.com/list/ls066069214"
       keyword: "mindbender"
-      language: "en"
       letterboxd_list: "theme-mindfuck"
-      name: sub_genre
-      rating.gte: 5
       trakt_extra_1: "https://trakt.tv/users/hdlists/lists/mindfuck-movies"
-      type: "movie,tv_movie"
-      visible_home: weekly(saturday)
-      visible_shared: weekly(saturday)
-      votes.gte: 1000
 
   Paranormal:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_paranormal.png
-    schedule: weekly(friday|saturday|sunday)
-    #summary: "Top rated movies in Paranormal"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "paranormal-phenomenon"
-      language: "en"
       letterboxd_list: "theme-paranormal"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(saturday)
-      visible_shared: weekly(saturday)
-      votes.gte: 1000
 
   Philosophy:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_philosophical.png
-    schedule: weekly(friday|saturday|sunday)
-    #summary: "Top rated movies in Philosophical"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "philosophy"
-      language: "en"
       letterboxd_list: "theme-philosophical"
-      name: sub_genre
-      rating.gte: 5
       trakt_extra_1: "https://trakt.tv/users/rizreflects/lists/philosophical"
-      type: "movie,tv_movie"
-      visible_home: weekly(saturday)
-      visible_shared: weekly(saturday)
-      votes.gte: 1000
 
   Politics:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_political.png
-    schedule: weekly(friday|saturday|sunday)
-    #summary: "Top rated movies in Political"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "politics,politician"
-      language: "en"
       letterboxd_list: "theme-political"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(saturday)
-      visible_shared: weekly(saturday)
-      votes.gte: 1000
 
   Psychedelic:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_psychedelic.png
-    schedule: weekly(friday|saturday|sunday)
-    #summary: "Top rated movies in Psychedelic"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "psychedelic"
-      language: "en"
       letterboxd_list: "theme-psychedelic"
-      name: sub_genre
       rating.gte: 2
-      type: "movie,tv_movie"
-      visible_home: weekly(saturday)
-      visible_shared: weekly(saturday)
-      votes.gte: 1000
 
   Psychological:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_psychological.png
-    schedule: weekly(friday|saturday|sunday)
-    #summary: "Top rated movies in Psychological"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword.any: "psychological,psychological-horror"
-      language: "en"
       letterboxd_list: "theme-psychological"
-      name: sub_genre
       rating.gte: 2
-      type: "movie,tv_movie"
-      visible_home: weekly(saturday)
-      visible_shared: weekly(saturday)
-      votes.gte: 1000
 
   Religion:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_religion.png
-    schedule: weekly(friday|saturday|sunday)
-    #summary: "Top rated movies in Religion"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "faith,religion,prayer"
-      language: "en"
       letterboxd_list: "theme-religous"
-      name: sub_genre
       rating.gte: 2
-      type: "movie,tv_movie"
-      visible_home: weekly(saturday)
-      visible_shared: weekly(saturday)
       votes.gte: 100
 
   Remake:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_remake.png
-    schedule: weekly(friday|saturday|sunday)
-    #summary: "Top rated movies in Remake"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "remake"
-      language: "en"
       letterboxd_list_details_url_1: "https://letterboxd.com/l_shelby/list/remakes/by/rating/"
       letterboxd_list_details_limit_1: 250
       letterboxd_list: "theme-remake"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(saturday)
-      visible_shared: weekly(saturday)
       votes.gte: 100
 
   Revenge:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_revenge.png
-    schedule: weekly(friday|saturday|sunday)
-    #summary: "Top rated movies in Revenge"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "revenge-plot"
-      language: "en"
       letterboxd_list: "theme-revenge"
-      name: sub_genre
       rating.gte: 3
-      type: "movie,tv_movie"
-      visible_home: weekly(saturday)
-      visible_shared: weekly(saturday)
-      votes.gte: 1000
 
   Stop-Motion:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_stop-motion.png
-    schedule: weekly(friday|saturday|sunday)
-    #summary: "Top rated movies in Stop-Motion"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "stop-motion"
-      language: "en"
       letterboxd_list_details_url_1: "https://letterboxd.com/savage_/list/stop-motion/by/rating/"
       letterboxd_list_details_limit_1: 250
       letterboxd_list: "theme-stop-motion"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(saturday)
-      visible_shared: weekly(saturday)
       votes.gte: 100
 
   Surrealism:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_surrealism.png
-    schedule: weekly(friday|saturday|sunday)
-    #summary: "Top rated movies in Surrealism"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "surrealism"
-      language: "en"
       letterboxd_list: "theme-surrealism"
-      name: sub_genre
       rating.gte: 7
-      type: "movie,tv_movie"
-      visible_home: weekly(saturday)
-      visible_shared: weekly(saturday)
-      votes.gte: 1000
 
   Video Game:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_video-game.png
-    schedule: weekly(friday|saturday|sunday)
-    #summary: "Top rated movies in Video Game"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "based-on-video-game"
-      language: "en"
       letterboxd_list: "theme-video-game"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(saturday)
-      visible_shared: weekly(saturday)
-      votes.gte: 1000

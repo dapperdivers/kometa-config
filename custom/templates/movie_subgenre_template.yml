@@ -1,5 +1,8 @@
 templates:
   sub_genre:
+    default:
+      language: en # constant across every subgenre collection
+      type: movie,tv_movie # constant across every subgenre collection
     collection_mode: hide
     collection_order: critic_rating.desc
     delete_not_scheduled: false

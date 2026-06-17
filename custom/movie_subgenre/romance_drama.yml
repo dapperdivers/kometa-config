@@ -1,81 +1,51 @@
 external_templates:
   - file: /config/custom/templates/movie_subgenre_template.yml
 
+# Per-file constants live in the &sched / &tmpl anchors defined on the first
+# collection below; every other collection merges them with `<<: *tmpl` and only
+# declares what differs (keyword/letterboxd_list, and rating/votes overrides).
 collections:
   Coming of Age:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_coming-of-age.png
-    schedule: weekly(thursday|friday|saturday)
-    #summary: "Top rated movies in Coming of Age"
+    schedule: &sched weekly(thursday|friday|saturday)
     template:
+      <<: &tmpl
+        name: sub_genre
+        rating.gte: 5
+        votes.gte: 1000
+        visible_home: weekly(friday)
+        visible_shared: weekly(friday)
       keyword: "coming-of-age,friendship,teenage-boy,teenage-girl"
-      language: "en"
       letterboxd_list: "theme-coming-of-age"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(friday)
-      visible_shared: weekly(friday)
-      votes.gte: 1000
 
   Heartbreak:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_heartbreak.png
-    schedule: weekly(thursday|friday|saturday)
-    #summary: "Top rated movies in Heartbreak"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "broken-heart"
-      language: "en"
       letterboxd_list: "theme-heartbreak"
-      name: sub_genre
       rating.gte: 1
-      type: "movie,tv_movie"
-      visible_home: weekly(friday)
-      visible_shared: weekly(friday)
       votes.gte: 10
 
   LGBTQ+:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_lgbtq.png
-    schedule: weekly(thursday|friday|saturday)
-    #summary: "Top rated movies in LGBTQ+"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword.any: "lgbt,lgbtq,lgbtqi,lgbtqia,gay,lesbianism,homosexuality,gay-interest"
-      language: "en"
       letterboxd_list: "theme-lgbtq"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(friday)
-      visible_shared: weekly(friday)
-      votes.gte: 1000
 
   Melodrama:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_melodrama.png
-    schedule: weekly(thursday|friday|saturday)
-    #summary: "Top rated movies in Melodrama"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "melodrama"
-      language: "en"
       letterboxd_list: "theme-melodrama"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(friday)
-      visible_shared: weekly(friday)
-      votes.gte: 1000
 
   Romantic Drama:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_romantic-drama.png
-    schedule: weekly(thursday|friday|saturday)
-    #summary: "Top rated movies in Romantic Drama"
+    schedule: *sched
     template:
+      <<: *tmpl
       genre: "romance,drama"
-      language: "en"
       letterboxd_list: "theme-romantic-drama"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(friday)
-      visible_shared: weekly(friday)
-      votes.gte: 1000
     filters:
       genre: Drama
       year.gte: 1960

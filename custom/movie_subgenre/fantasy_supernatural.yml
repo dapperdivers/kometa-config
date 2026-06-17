@@ -1,108 +1,61 @@
 external_templates:
   - file: /config/custom/templates/movie_subgenre_template.yml
 
+# Per-file constants live in the &sched / &tmpl anchors defined on the first
+# collection below; every other collection merges them with `<<: *tmpl` and only
+# declares what differs (keyword/letterboxd_list, and rating/votes overrides).
 collections:
   Dark Fantasy:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_dark-fantasy.png
-    schedule: weekly(tuesday|wednesday|thursday)
-    #summary: "Top rated movies in Dark Fantasy"
+    schedule: &sched weekly(tuesday|wednesday|thursday)
     template:
+      <<: &tmpl
+        name: sub_genre
+        rating.gte: 5
+        votes.gte: 1000
+        visible_home: weekly(wednesday)
+        visible_shared: weekly(wednesday)
       keyword: "dark-fantasy"
-      language: "en"
       letterboxd_list: "theme-dark-fantasy"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(wednesday)
-      visible_shared: weekly(wednesday)
-      votes.gte: 1000
 
   Dragon:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_dragons.png
-    schedule: weekly(tuesday|wednesday|thursday)
-    #summary: "Top rated movies in Dragons"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "dragon"
-      language: "en"
       letterboxd_list: "theme-dragons"
-      name: sub_genre
       rating.gte: 3
-      type: "movie,tv_movie"
-      visible_home: weekly(wednesday)
-      visible_shared: weekly(wednesday)
-      votes.gte: 1000
 
   Fairy Tale:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_fairytales.png
-    schedule: weekly(tuesday|wednesday|thursday)
-    #summary: "Top rated movies in Fairytales"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "based-on-fairy-tale"
-      language: "en"
       letterboxd_list: "theme-fairytale"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(wednesday)
-      visible_shared: weekly(wednesday)
-      votes.gte: 1000
 
   Mythology:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_mythology.png
-    schedule: weekly(tuesday|wednesday|thursday)
-    #summary: "Top rated movies in Mythology"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "mythology"
-      language: "en"
       letterboxd_list: "theme-mythology"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(wednesday)
-      visible_shared: weekly(wednesday)
-      votes.gte: 1000
 
   Supernatural:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_supernatural.png
-    schedule: weekly(tuesday|wednesday|thursday)
-    #summary: "Top rated movies in Supernatural"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "supernatural-power"
-      language: "en"
       letterboxd_list: "theme-supernatural"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(wednesday)
-      visible_shared: weekly(wednesday)
-      votes.gte: 1000
 
   Urban Fantasy:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_urban-fantasy.png
-    schedule: weekly(tuesday|wednesday|thursday)
-    #summary: "Top rated movies in Urban Fantasy"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "urban-fantasy"
-      language: "en"
       letterboxd_list: "theme-urban-fantasy"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(wednesday)
-      visible_shared: weekly(wednesday)
-      votes.gte: 1000
 
   Wizardry & Witchcraft:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_wizardry-witchcraft.png
-    schedule: weekly(tuesday|wednesday|thursday)
-    #summary: "Top rated movies in Wizardry & Witchcraft"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword.any: "witch,wizard"
-      language: "en"
       letterboxd_list: "theme-wizardry-witchcraft"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(wednesday)
-      visible_shared: weekly(wednesday)
-      votes.gte: 1000

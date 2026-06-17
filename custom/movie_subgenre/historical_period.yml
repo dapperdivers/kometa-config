@@ -1,110 +1,65 @@
 external_templates:
   - file: /config/custom/templates/movie_subgenre_template.yml
 
+# Per-file constants live in the &sched / &tmpl anchors defined on the first
+# collection below; every other collection merges them with `<<: *tmpl` and only
+# declares what differs (keyword/letterboxd_list, and rating/votes overrides).
 collections:
   Costume Drama:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_costume-drama.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Costume Drama"
+    schedule: &sched weekly(wednesday|thursday|friday)
     template:
+      <<: &tmpl
+        name: sub_genre
+        rating.gte: 5
+        votes.gte: 1000
+        visible_home: weekly(thursday)
+        visible_shared: weekly(thursday)
       keyword: "costume-drama"
-      language: "en"
       letterboxd_list: "theme-costume-drama"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Epic:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_epics.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Epics"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "epic"
-      language: "en"
       letterboxd_list: "theme-epics"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Historical Event:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_historical-event.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Historical Event"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "historical-event"
-      language: "en"
       letterboxd_list: "theme-historical-event"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Medieval:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_medieval.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Medieval"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "medieval-times"
-      language: "en"
       letterboxd_list: "theme-medieval"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Period Drama:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_period-drama.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Period Drama"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "period-drama"
-      language: "en"
       letterboxd_list: "theme-period-drama"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Prehistoric:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_prehistoric.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Prehistoric"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "prehistoric-times"
-      language: "en"
+      letterboxd_list: "theme-prehistoric"
       letterboxd_list_details_url_1: "https://letterboxd.com/mikkelhh/list/before-civilization-prehistoric-films/by/rating/"
       letterboxd_list_details_limit_1: 250
-      letterboxd_list: "theme-prehistoric"
-      name: sub_genre
       rating.gte: 2
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Spaghetti Western:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_spaghetti-western.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Spaghetti Western"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "spaghetti-western"
-      language: "en"
       letterboxd_list: "theme-spaghetti-western"
-      name: sub_genre
       rating.gte: 1
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
       votes.gte: 10

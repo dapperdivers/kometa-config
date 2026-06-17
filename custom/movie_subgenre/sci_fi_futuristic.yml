@@ -1,246 +1,129 @@
 external_templates:
   - file: /config/custom/templates/movie_subgenre_template.yml
 
+# Per-file constants live in the &sched / &tmpl anchors defined on the first
+# collection below; every other collection merges them with `<<: *tmpl` and only
+# declares what differs (keyword/letterboxd_list, and rating/votes overrides).
 collections:
   Alien:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_aliens.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Aliens"
+    schedule: &sched weekly(wednesday|thursday|friday)
     template:
+      <<: &tmpl
+        name: sub_genre
+        rating.gte: 5
+        votes.gte: 1000
+        visible_home: weekly(thursday)
+        visible_shared: weekly(thursday)
       keyword: "alien,alien-invasion"
-      language: "en"
       letterboxd_list: "theme-aliens"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Alternate History:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_alternate-history.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Alternate History"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "alternate-history"
-      language: "en"
       letterboxd_list: "theme-alternate-history"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Apocalypse:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_apocalypse.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Apocalypse"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "apocalypse,end-of-the-world"
-      language: "en"
       letterboxd_list: "theme-apocalypse"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Artificial Intelligence:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_artificial-intelligence.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Artificial Intelligence"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "artificial-intelligence"
-      language: "en"
       letterboxd_list: "theme-artificial-intelligence"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Cyberpunk:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_cyberpunk.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Cyberpunk"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "cyberpunk,future"
-      language: "en"
       letterboxd_list: "theme-cyberpunk"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Dinosaurs:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_dinosaurs.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Dinosaurs"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "dinosaur"
-      language: "en"
       letterboxd_list: "theme-dinosaurs"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Dystopian:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_dystopian.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Dystopian"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "dystopia"
-      language: "en"
       letterboxd_list: "theme-dystopian"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Futuristic:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_futuristic.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Futuristic"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "future"
-      language: "en"
       letterboxd_list: "theme-futuristic"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Pandemic:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_pandemic.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Pandemic"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "pandemic"
-      language: "en"
       letterboxd_list: "theme-pandemic"
-      name: sub_genre
       rating.gte: 2
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Post-Apocalyptic:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_post-apocalyptic.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Post-Apocalyptic"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "post-apocalypse"
-      language: "en"
       letterboxd_list: "theme-post-apocalyptic"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Robot:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_robots.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Robots"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "giant-robot"
-      language: "en"
       letterboxd_list: "theme-robots"
-      name: sub_genre
       rating.gte: 3
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Space:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_outerspace.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Outerspace"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "outer-space,space-travel"
-      language: "en"
       letterboxd_list: "theme-outer-space"
-      name: sub_genre
-      rating.gte: 5
       trakt_extra_1: "https://trakt.tv/users/hdlists/lists/outer-space-space-exploration-movies"
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Space Opera:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_space-opera.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Space Opera"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "space-opera"
-      language: "en"
       letterboxd_list: "theme-space-opera"
-      name: sub_genre
       rating.gte: 2
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Steampunk:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_steampunk.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Steampunk"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "steampunk"
-      language: "en"
       letterboxd_list: "theme-steampunk"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Time Travel:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_time-travel.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Time Travel"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "time-travel"
-      language: "en"
       letterboxd_list: "theme-time-travel"
-      name: sub_genre
-      rating.gte: 5
       trakt_extra_1: "https://trakt.tv/users/rizreflects/lists/time-travel"
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
 
   Utopia:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_utopian.png
-    schedule: weekly(wednesday|thursday|friday)
-    #summary: "Top rated movies in Utopian"
+    schedule: *sched
     template:
-      imdb_extra_1: "https://www.imdb.com/list/ls041227401"
+      <<: *tmpl
       keyword: "utopia"
-      language: "en"
       letterboxd_list: "theme-utopian"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(thursday)
-      visible_shared: weekly(thursday)
-      votes.gte: 1000
+      imdb_extra_1: "https://www.imdb.com/list/ls041227401"

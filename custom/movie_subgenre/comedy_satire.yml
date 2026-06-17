@@ -1,118 +1,73 @@
 external_templates:
   - file: /config/custom/templates/movie_subgenre_template.yml
 
+# Per-file constants live in the &sched / &tmpl anchors defined on the first
+# collection below; every other collection merges them with `<<: *tmpl` and only
+# declares what differs (keyword/letterboxd_list, and rating/votes overrides).
 collections:
   Chick Flick:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_chick-flick.png
-    schedule: weekly(monday|tuesday|wednesday)
-    #summary: "Top rated movies in Chick-flick"
+    schedule: &sched weekly(monday|tuesday|wednesday)
     template:
+      <<: &tmpl
+        name: sub_genre
+        rating.gte: 5
+        votes.gte: 1000
+        visible_home: weekly(tuesday)
+        visible_shared: weekly(tuesday)
       keyword: "chick-flick"
-      language: "en"
       letterboxd_list_details_url_1: "https://letterboxd.com/marialuisacctc/list/women-have-superior-taste-that-is-why-these/by/rating/"
       letterboxd_list_details_limit_1: 250
       letterboxd_list_details_url_2: "https://letterboxd.com/darkestparadise/list/definition-of-girly-classics/by/rating/"
       letterboxd_list_details_limit_2: 250
       letterboxd_list: "theme-chick-flick"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(tuesday)
-      visible_shared: weekly(tuesday)
       votes.gte: 100
 
   Dark Comedy:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_dark-comedy.png
-    schedule: weekly(monday|tuesday|wednesday)
-    #summary: "Top rated movies in Dark Comedy"
+    schedule: *sched
     template:
+      <<: *tmpl
       genre: "comedy"
       keyword.any: "black-comedy,dark-comedy"
-      language: "en"
       letterboxd_list: "theme-dark-comedy"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(tuesday)
-      visible_shared: weekly(tuesday)
-      votes.gte: 1000
 
   Mockumentary:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_mockumentary.png
-    schedule: weekly(monday|tuesday|wednesday)
-    #summary: "Top rated movies in Mockumentary"
+    schedule: *sched
     template:
+      <<: *tmpl
       imdb_extra_1: "https://www.imdb.com/list/ls027069047"
       keyword: "mockumentary,fake-documentary"
-      language: "en"
       letterboxd_list: "theme-mockumentary"
-      name: sub_genre
       rating.gte: 2
-      type: "movie,tv_movie"
-      visible_home: weekly(tuesday)
-      visible_shared: weekly(tuesday)
-      votes.gte: 1000
 
   Parody:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_parody.png
-    schedule: weekly(monday|tuesday|wednesday)
-    #summary: "Top rated movies in Parody"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword.any: "parody,parody-comedy"
-      language: "en"
       letterboxd_list: "theme-parody"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(tuesday)
-      visible_shared: weekly(tuesday)
-      votes.gte: 1000
 
   Romantic Comedy:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_romantic-comedy.png
-    schedule: weekly(monday|tuesday|wednesday)
-    #summary: "Top rated movies in Romantic Comedy"
+    schedule: *sched
     template:
+      <<: *tmpl
       genre: "romance,comedy"
-      language: "en"
       letterboxd_list: "theme-romantic-comedy"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(tuesday)
-      visible_shared: weekly(tuesday)
-      votes.gte: 1000
     filters:
       genre: Comedy
       year.gte: 1960
 
   Satire:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_satire.png
-    schedule: weekly(monday|tuesday|wednesday)
-    #summary: "Top rated movies in Satire"
+    schedule: *sched
     template:
+      <<: *tmpl
       genre: "comedy"
       keyword: "satire"
-      language: "en"
       letterboxd_list: "theme-satire"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(tuesday)
-      visible_shared: weekly(tuesday)
-      votes.gte: 1000
 
   Stoner Comedy:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_stoner.png
-    schedule: weekly(monday|tuesday|wednesday)
-    #summary: "Top rated movies in Stoner"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "stoner,marijuana"
-      language: "en"
       letterboxd_list: "theme-stoner"
-      name: sub_genre
       rating.gte: 1
-      type: "movie,tv_movie"
-      visible_home: weekly(tuesday)
-      visible_shared: weekly(tuesday)
-      votes.gte: 1000

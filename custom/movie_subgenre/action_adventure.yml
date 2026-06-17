@@ -1,252 +1,145 @@
 external_templates:
   - file: /config/custom/templates/movie_subgenre_template.yml
 
+# Per-file constants live in the &sched / &tmpl anchors defined on the first
+# collection below; every other collection merges them with `<<: *tmpl` and only
+# declares what differs (keyword/letterboxd_list, and rating/votes overrides).
 collections:
   Anti-Hero:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_anti-hero.png
-    schedule: weekly(sunday|monday|tuesday)
-    #summary: "Top rated movies in Anti-Hero"
+    schedule: &sched weekly(sunday|monday|tuesday)
     template:
+      <<: &tmpl
+        name: sub_genre
+        rating.gte: 5
+        votes.gte: 1000
+        visible_home: weekly(monday)
+        visible_shared: weekly(monday)
       keyword: "anti-hero,superhero"
-      language: "en"
       letterboxd_list: "theme-anti-hero"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(monday)
-      visible_shared: weekly(monday)
-      votes.gte: 1000
 
   Assassin:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_assassins.png
-    schedule: weekly(sunday|monday|tuesday)
-    #summary: "Top rated movies in Assassins"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "assassination-attempt"
-      language: "en"
       letterboxd_list: "theme-assassins"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(monday)
-      visible_shared: weekly(monday)
-      votes.gte: 1000
 
   Boxing:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_boxing.png
-    schedule: weekly(sunday|monday|tuesday)
-    #summary: "Top rated movies in Boxing"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword.any: "boxing,boxing-champion"
-      language: "en"
       letterboxd_list: "theme-boxing"
-      name: sub_genre
       rating.gte: 2
-      type: "movie,tv_movie"
-      visible_home: weekly(monday)
-      visible_shared: weekly(monday)
       votes.gte: 100
 
   Martial Arts:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_martial-arts.png
-    schedule: weekly(sunday|monday|tuesday)
-    #summary: "Top rated movies in Martial-Arts"
+    schedule: *sched
     template:
+      <<: *tmpl
+      keyword: "martial-artist,martial-arts-master,martial-arts"
+      letterboxd_list: "theme-martial-arts"
       imdb_extra_1: "https://www.imdb.com/list/ls000099643"
       imdb_extra_2: "https://www.imdb.com/list/ls068611186"
       imdb_extra_3: "https://www.imdb.com/list/ls068378513"
       imdb_extra_4: "https://www.imdb.com/list/ls090404120"
-      keyword: "martial-artist,martial-arts-master,martial-arts"
-      language: "en"
-      letterboxd_list: "theme-martial-arts"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(monday)
-      visible_shared: weekly(monday)
-      votes.gte: 1000
 
   Military:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_military.png
-    schedule: weekly(sunday|monday|tuesday)
-    #summary: "Top rated movies in Military"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "military,soldier"
-      language: "en"
       letterboxd_list: "theme-military"
-      name: sub_genre
       rating.gte: 2
-      type: "movie,tv_movie"
-      visible_home: weekly(monday)
-      visible_shared: weekly(monday)
-      votes.gte: 1000
 
   Naval:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_naval.png
-    schedule: weekly(sunday|monday|tuesday)
-    #summary: "Top rated movies in Naval"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "naval-battle"
-      language: "en"
       letterboxd_list: "theme-naval"
-      name: sub_genre
       rating.gte: 2
-      type: "movie,tv_movie"
-      visible_home: weekly(monday)
-      visible_shared: weekly(monday)
-      votes.gte: 1000
 
   Ninja:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_ninjas.png
-    schedule: weekly(sunday|monday|tuesday)
-    #summary: "Top rated movies in Ninjas"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "ninja"
-      language: "en"
       letterboxd_list: "theme-ninjas"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(monday)
-      visible_shared: weekly(monday)
-      votes.gte: 1000
 
   Petrolhead:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_petrolhead.png
-    schedule: weekly(sunday|monday|tuesday)
-    #summary: "Top rated movies in Petrolhead"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword.any: "car-racing,racing"
-      language: "en"
       letterboxd_list: "theme-petrolhead"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(monday)
-      visible_shared: weekly(monday)
       votes.gte: 100
 
   Samurai:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_samurai.png
-    schedule: weekly(sunday|monday|tuesday)
-    #summary: "Top rated movies in Samurai"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "samurai,sword-fight"
-      language: "en"
+      letterboxd_list: "theme-samurai"
       letterboxd_list_details_url_1: "https://letterboxd.com/jhcrotinger/list/samurai/by/rating/"
       letterboxd_list_details_limit_1: 250
-      letterboxd_list: "theme-samurai"
-      name: sub_genre
       rating.gte: 2
-      type: "movie,tv_movie"
-      visible_home: weekly(monday)
-      visible_shared: weekly(monday)
       votes.gte: 100
 
   Superhero:
-    #summary: "Top rated movies in Superhero"
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_superhero.png
-    schedule: weekly(sunday|monday|tuesday)
+    schedule: *sched
     template:
-      name: sub_genre
+      <<: *tmpl
       keyword: "superhero"
-      type: "movie,tv_movie"
-      rating.gte: 5
-      votes.gte: 1000
-      language: "en"
       letterboxd_list: "theme-superhero"
-      visible_home: weekly(monday)
-      visible_shared: weekly(monday)
 
   Survival:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_survival.png
-    schedule: weekly(sunday|monday|tuesday)
-    #summary: "Top rated movies in Survival"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "survival,survivor"
-      language: "en"
       letterboxd_list: "theme-survival"
-      name: sub_genre
-      rating.gte: 5
       trakt_extra_1: "https://trakt.tv/users/rizreflects/lists/survival"
-      type: "movie,tv_movie"
-      visible_home: weekly(monday)
-      visible_shared: weekly(monday)
-      votes.gte: 1000
 
   Swashbuckler:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_swashbuckler.png
-    schedule: weekly(sunday|monday|tuesday)
-    #summary: "Top rated movies in Swashbuckler"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "swashbuckler"
-      language: "en"
       letterboxd_list: "theme-swashbuckler"
-      name: sub_genre
       rating.gte: 2
-      type: "movie,tv_movie"
-      visible_home: weekly(monday)
-      visible_shared: weekly(monday)
       votes.gte: 100
 
   Sword & Sandal:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_sword-sandal.png
-    schedule: weekly(sunday|monday|tuesday)
-    #summary: "Top rated movies in Sword & Sandal"
+    schedule: *sched
     template:
-      imdb_extra_1: "https://www.imdb.com/list/ls043130664"
+      <<: *tmpl
       keyword: "sword-and-sandal"
-      language: "en"
       letterboxd_list: "theme-sword-sandal"
-      name: sub_genre
+      imdb_extra_1: "https://www.imdb.com/list/ls043130664"
       rating.gte: 3
-      type: "movie,tv_movie"
-      visible_home: weekly(monday)
-      visible_shared: weekly(monday)
-      votes.gte: 1000
 
   Sword & Sorcery:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_sword-sorcery.png
-    schedule: weekly(sunday|monday|tuesday)
-    #summary: "Top rated movies in Sword & Sorcery"
+    schedule: *sched
     template:
-      imdb_extra_1: "https://www.imdb.com/list/ls022909805"
+      <<: *tmpl
       keyword: "sword-and-sorcery"
-      language: "en"
       letterboxd_list: "theme-sword-sorcery"
-      name: sub_genre
+      imdb_extra_1: "https://www.imdb.com/list/ls022909805"
       rating.gte: 3
-      type: "movie,tv_movie"
-      visible_home: weekly(monday)
-      visible_shared: weekly(monday)
-      votes.gte: 1000
 
   Treasure Hunt:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_treasure-hunt.png
-    schedule: weekly(sunday|monday|tuesday)
-    #summary: "Top rated movies in Treasure Hunt"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword: "treasure-hunt"
-      language: "en"
       letterboxd_list: "theme-treasure-hunt"
-      name: sub_genre
       rating.gte: 2
-      type: "movie,tv_movie"
-      visible_home: weekly(monday)
-      visible_shared: weekly(monday)
       votes.gte: 100
 
   World War:
-    #url_poster: https://raw.githubusercontent.com/0x5f3/pmm.config/assets/_subgenre_top/subgenre_top_world-war.png
-    schedule: weekly(sunday|monday|tuesday)
-    #summary: "Top rated movies in World War"
+    schedule: *sched
     template:
+      <<: *tmpl
       keyword.any: "world-war-one,world-war-two"
-      language: "en"
       letterboxd_list: "theme-world-war"
-      name: sub_genre
-      rating.gte: 5
-      type: "movie,tv_movie"
-      visible_home: weekly(monday)
-      visible_shared: weekly(monday)
-      votes.gte: 1000
