@@ -261,12 +261,6 @@ libraries: # This is called out once within the config.yml file
           - tmdb # Update all original available date from tmdb
           - tvdb # Update all original available date from tvdb if not from tmdb
           - omdb # Update all original available date from omdb(imdb) if not from tvdb
-      - &id009
-        schedule: monthly(last) # heavy with overlays (resets poster + reapplies overlays); run once a month
-        mass_poster_update:
-          source: tmdb
-          language: xx # textless poster art from TMDb
-          ignore_locked: true # skip posters already locked by overlays → avoids re-pull churn
     radarr:
       url: <<RADARR_HOST>>
       token: <<RADARR_API_KEY>>
@@ -441,7 +435,7 @@ libraries: # This is called out once within the config.yml file
           back_color: "#00000000"
       - remove_overlays: false
     operations:
-      <<: [*id001, *id002, *id003, *id004, *id005, *id006, *id007, *id008, *id009]
+      <<: [*id001, *id002, *id003, *id004, *id005, *id006, *id007, *id008]
     sonarr:
       url: <<SONARR_HOST>>
       token: <<SONARR_API_KEY>>

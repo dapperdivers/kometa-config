@@ -57,3 +57,7 @@ Confirm exact keys on `https://kometa.wiki/en/nightly/config/operations/` before
   ⚠ With overlays, this resets the poster and reapplies all overlays each run → image
   bloat / longer runtime. Mitigate with `ignore_locked: true` and an infrequent
   `schedule` (e.g. `monthly(last)`); local assets still win under `prioritize_assets`.
+  ⚠ **Don't use it in this repo** — posters are managed by **Posterizarr** (writes to
+  `/assets`, which wins via `prioritize_assets: true`), so `mass_poster_update` is
+  redundant for covered items and only adds poster churn/runtime. Do textless art in
+  Posterizarr instead.
