@@ -35,18 +35,18 @@ default to `daily`.
 Do not invent options. There is no `quarterly`, `biweekly`, `bimonthly`,
 `every_other_day`, etc. Valid types:
 
-| Type | Format | Examples |
-|------|--------|----------|
-| Hourly | `hourly(H)` / `hourly(Start-End)` | `hourly(17)`, `hourly(17-04)` |
-| Daily | `daily` | `daily` |
-| Weekly | `weekly(Days)` | `weekly(sunday)`, `weekly(sunday\|tuesday)` |
-| Monthly | `monthly(Day)` / `monthly(last)` | `monthly(1)`, `monthly(last)` |
-| Yearly | `yearly(MM/DD)` | `yearly(01/30)` |
-| Date | `date(MM/DD/YYYY)` | `date(12/25/2024)` |
-| Range | `range(MM/DD-MM/DD)` | `range(12/01-12/31)` |
-| Never | `never` | `never` |
-| Non-existing | `non_existing` | `non_existing` |
-| All (AND) | `all[Options]` | `all[weekly(sunday), hourly(17)]` |
+| Type         | Format                            | Examples                                    |
+| ------------ | --------------------------------- | ------------------------------------------- |
+| Hourly       | `hourly(H)` / `hourly(Start-End)` | `hourly(17)`, `hourly(17-04)`               |
+| Daily        | `daily`                           | `daily`                                     |
+| Weekly       | `weekly(Days)`                    | `weekly(sunday)`, `weekly(sunday\|tuesday)` |
+| Monthly      | `monthly(Day)` / `monthly(last)`  | `monthly(1)`, `monthly(last)`               |
+| Yearly       | `yearly(MM/DD)`                   | `yearly(01/30)`                             |
+| Date         | `date(MM/DD/YYYY)`                | `date(12/25/2024)`                          |
+| Range        | `range(MM/DD-MM/DD)`              | `range(12/01-12/31)`                        |
+| Never        | `never`                           | `never`                                     |
+| Non-existing | `non_existing`                    | `non_existing`                              |
+| All (AND)    | `all[Options]`                    | `all[weekly(sunday), hourly(17)]`           |
 
 ## The range() gotcha
 
@@ -99,12 +99,15 @@ keep the per-file day assignment consistent with the comments in `config.yml`.
 ## Step 3 — Validate
 
 ```bash
-yamllint <file>.yml                    # catches quoting/indent around schedule strings
-kometa --validate-file <file>.yml      # Kometa-native schema check (standalone) → validate.log
+mise run validate                                                              # config.yml + all linked files, offline → validate.log
+mise run kometa -- --validate-file /config/<file>.yml --validate-level structure   # one file, targeted (note /config prefix)
+oxfmt <file>.yml                                                               # format (also auto-run by lefthook pre-commit)
 ```
 
-`kometa --validate-file` catches schema-level mistakes (bad keys/types, and many
-malformed schedule strings), but it can't know your *intent* — a window narrower
+These run the pinned `kometateam/kometa:nightly` image in Docker (no local `kometa`
+install needed; repo mounted at `/config`). They catch schema-level mistakes (bad
+keys/types, and many malformed schedule strings), but can't know your _intent_ — a
+window narrower
 than its `visible_*` day is valid YAML and valid schema, yet still wrong. Those
 logic errors only surface as "failed to parse schedule" or a silently-missing
 collection in `logs/meta.log` at run time. So manually re-check every change

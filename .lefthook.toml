@@ -1,0 +1,41 @@
+[pre-commit]
+parallel = true
+skip = ["merge", "rebase"]
+
+[pre-commit.commands.format-mise]
+glob = [".mise.toml"]
+run = "mise fmt"
+stage_fixed = true
+
+[pre-commit.commands.format-json]
+glob = ["*.json", "*.json5", "*.jsonc"]
+run = "oxfmt {staged_files}"
+stage_fixed = true
+
+[pre-commit.commands.format-markdown]
+glob = ["*.md", "*.markdown", "*.mdx"]
+run = "oxfmt {staged_files}"
+stage_fixed = true
+
+[pre-commit.commands.format-yaml]
+glob = ["*.yaml", "*.yml"]
+# Never reformat auto-generated Kometa report files
+exclude = '_report\.ya?ml$'
+run = "oxfmt {staged_files}"
+stage_fixed = true
+
+[pre-commit.commands.mise-lock]
+glob = [".mise.toml"]
+run = "mise lock && git add mise.lock"
+
+[pre-commit.commands.gitleaks]
+run = "gitleaks git --pre-commit --redact --staged --verbose"
+
+[pre-push]
+parallel = true
+
+# Offline Kometa config validation (structure level — no Plex/API connection).
+# Only runs when Kometa YAML is part of the push. Requires Docker (pulls kometateam/kometa:nightly).
+[pre-push.commands.kometa-validate]
+glob = ["config.yml", "custom/**/*.yml", "overlays/*.yml"]
+run = "mise run validate"

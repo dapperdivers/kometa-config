@@ -5,12 +5,12 @@ Each skill follows the same discipline: **read the live Kometa source before
 proposing YAML**, because this config tracks the **nightly** branch where syntax
 moves fast.
 
-| Skill | Owns | Read first |
-|-------|------|-----------|
-| [`kometa-collections`](kometa-collections/SKILL.md) | collection / dynamic-collection / metadata files, builders, filters, defaults | `kometa.wiki/en/nightly/files/...` + `defaults/` source |
-| [`kometa-overlays`](kometa-overlays/SKILL.md) | overlay files, positioning, group/weight/queue, overlay defaults, images/fonts | `kometa.wiki/en/nightly/files/overlays/` + `defaults/overlays/` source |
-| [`kometa-config`](kometa-config/SKILL.md) | `config.yml` libraries, settings, operations, playlists, integrations | `kometa.wiki/en/nightly/config/...` |
-| [`kometa-scheduling`](kometa-scheduling/SKILL.md) | `schedule` / `visible_home` / `visible_shared` values and rotations | `kometa.wiki/en/nightly/config/schedule/` |
+| Skill                                               | Owns                                                                           | Read first                                                             |
+| --------------------------------------------------- | ------------------------------------------------------------------------------ | ---------------------------------------------------------------------- |
+| [`kometa-collections`](kometa-collections/SKILL.md) | collection / dynamic-collection / metadata files, builders, filters, defaults  | `kometa.wiki/en/nightly/files/...` + `defaults/` source                |
+| [`kometa-overlays`](kometa-overlays/SKILL.md)       | overlay files, positioning, group/weight/queue, overlay defaults, images/fonts | `kometa.wiki/en/nightly/files/overlays/` + `defaults/overlays/` source |
+| [`kometa-config`](kometa-config/SKILL.md)           | `config.yml` libraries, settings, operations, playlists, integrations          | `kometa.wiki/en/nightly/config/...`                                    |
+| [`kometa-scheduling`](kometa-scheduling/SKILL.md)   | `schedule` / `visible_home` / `visible_shared` values and rotations            | `kometa.wiki/en/nightly/config/schedule/`                              |
 
 ## Shared conventions these skills assume
 
@@ -20,10 +20,11 @@ moves fast.
   `gh api "repos/Kometa-Team/Kometa/git/trees/nightly?recursive=1" --jq '.tree[].path | select(...)'`.
 - **In-container paths:** files referenced as `/config/...` (repo root mounts at
   `/config`).
-- **Validate:** `yamllint <file>` (`.yamllint`) + `npx prettier --check` (`.prettierrc.yml`)
-  for syntax/format, then `kometa --validate-file <file>` for Kometa-native schema
-  validation (current as of Kometa 2.4.x / nightly); never edit `*_report.yml` or `logs/`
-  (generated/ignored).
+- **Validate:** `mise run validate` (offline Kometa check of config.yml + all linked
+  files via the pinned `kometateam/kometa:nightly` Docker image — no local install) or
+  `mise run kometa -- --validate-file /config/<file>.yml --validate-level structure` for one
+  file. `oxfmt` (`.oxfmtrc.json`) handles formatting via the lefthook pre-commit hook;
+  never edit `*_report.yml` or `logs/` (generated/excluded).
 - **Live test:** `testing/` Docker harness (`testing/docker-compose.yml`,
   `testing/test-overlays.sh`) runs against a throwaway Plex — never test against
   production.

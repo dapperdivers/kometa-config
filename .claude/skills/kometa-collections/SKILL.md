@@ -31,16 +31,16 @@ This repo runs **nightly**. Use these bases (never `latest`/`master`):
 
 Fetch the page(s) that match the task with `WebFetch`:
 
-| Task | Doc URL |
-|------|---------|
-| Collection file structure / attributes | `https://kometa.wiki/en/nightly/files/collections/` |
-| Dynamic collections | `https://kometa.wiki/en/nightly/files/dynamic/` |
-| Dynamic collection types | `https://kometa.wiki/en/nightly/files/dynamic_types/` |
-| Builders (overview + per-service) | `https://kometa.wiki/en/nightly/files/builders/overview/` |
-| Filters | `https://kometa.wiki/en/nightly/files/filters/` |
-| Templates & external_templates | `https://kometa.wiki/en/nightly/files/templates/` |
-| Metadata (editing item details) | `https://kometa.wiki/en/nightly/files/metadata/` |
-| Defaults usage / shared variables | `https://kometa.wiki/en/nightly/defaults/collection_list/` |
+| Task                                    | Doc URL                                                      |
+| --------------------------------------- | ------------------------------------------------------------ |
+| Collection file structure / attributes  | `https://kometa.wiki/en/nightly/files/collections/`          |
+| Dynamic collections                     | `https://kometa.wiki/en/nightly/files/dynamic/`              |
+| Dynamic collection types                | `https://kometa.wiki/en/nightly/files/dynamic_types/`        |
+| Builders (overview + per-service)       | `https://kometa.wiki/en/nightly/files/builders/overview/`    |
+| Filters                                 | `https://kometa.wiki/en/nightly/files/filters/`              |
+| Templates & external_templates          | `https://kometa.wiki/en/nightly/files/templates/`            |
+| Metadata (editing item details)         | `https://kometa.wiki/en/nightly/files/metadata/`             |
+| Defaults usage / shared variables       | `https://kometa.wiki/en/nightly/defaults/collection_list/`   |
 | A specific default (e.g. genre, oscars) | `https://kometa.wiki/en/nightly/defaults/<category>/<name>/` |
 
 See `references/builders.md` for the full builder catalog and where each lives
@@ -99,22 +99,26 @@ Match this repo's established conventions before adding anything:
 ## Step 4 — Validate
 
 ```bash
-yamllint <file>.yml                 # config in .yamllint (line-length 200, 2-space indent)
-npx prettier --check "<file>.yml"   # config in .prettierrc.yml (double quotes, no bracket spacing)
-kometa --validate-file <file>.yml   # Kometa-native schema check, auto-detects type → validate.log
+mise run validate                                                                   # config.yml + all linked files, offline → validate.log
+mise run kometa -- --validate-file /config/custom/<file>.yml --validate-level structure   # one file, targeted
+oxfmt <file>.yml                                                                    # format (also auto-run by lefthook pre-commit)
 ```
 
-yamllint/prettier only check syntax/format; `kometa --validate-file` validates
-*Kometa* semantics (unknown keys, wrong types) against the per-type JSON schema and
-is the strongest pre-run check. Use `--validate-level full` for the deepest pass and
-`--validate-dir <dir>` to batch a folder. `--validate-file`/`--validate-dir` are
-standalone; bare `--validate` (whole `config.yml`) implies an immediate run, so don't
-use it as a dry check.
+These tasks run the pinned `kometateam/kometa:nightly` image in Docker (no local
+`kometa` install needed). The repo is mounted at `/config`, so `--validate-file`
+paths must be **`/config`-prefixed** (bare repo-relative paths won't resolve).
+Prefer `mise run validate` — it validates config.yml _and every file linked from
+it_ (the custom/ and overlays/ files), so a wired-in file is already covered; it's
+also the check the lefthook **pre-push** hook enforces. Reach for `--validate-file`
+when iterating on a single not-yet-wired file; it validates _Kometa_ semantics
+(unknown keys, wrong types) against the auto-detected per-type JSON schema. Use
+`--validate-dir /config/<dir>` to batch a folder, or `--validate-level full` for
+the deepest pass (connects to Plex/APIs).
 
-`*_report.yml` and `logs/` are auto-generated and prettier-ignored — don't edit
-or lint those. For a real run, the `testing/` Docker harness applies the config
-against a throwaway Plex (`testing/docker-compose.yml`, `kometateam/kometa:latest`).
-Validate YAML before suggesting a full run.
+`oxfmt` (`.oxfmtrc.json`) replaces the old prettier/yamllint setup. `*_report.yml`
+and `logs/` are auto-generated — don't edit or format those. For a real run, the
+`testing/` Docker harness applies the config against a throwaway Plex
+(`testing/docker-compose.yml`). Validate YAML before suggesting a full run.
 
 ## Output
 

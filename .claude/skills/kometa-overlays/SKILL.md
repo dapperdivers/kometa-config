@@ -31,14 +31,14 @@ This repo runs **nightly**. Bases (never `latest`/`master`):
 
 Fetch the page(s) that match the task with `WebFetch`:
 
-| Task | Doc URL |
-|------|---------|
-| Overlay file structure + all overlay attributes | `https://kometa.wiki/en/nightly/files/overlays/` |
-| Positioning, `group`/`weight`, queues, `builder_level` | `https://kometa.wiki/en/nightly/files/overlays/` |
-| Templates & external_templates | `https://kometa.wiki/en/nightly/files/templates/` |
-| Builders (what items an overlay applies to) | `https://kometa.wiki/en/nightly/files/builders/overview/` |
-| Overlay defaults overview + shared variables | `https://kometa.wiki/en/nightly/defaults/overlays/` |
-| A specific overlay default (e.g. ratings, resolution) | `https://kometa.wiki/en/nightly/defaults/overlays/<name>/` |
+| Task                                                   | Doc URL                                                    |
+| ------------------------------------------------------ | ---------------------------------------------------------- |
+| Overlay file structure + all overlay attributes        | `https://kometa.wiki/en/nightly/files/overlays/`           |
+| Positioning, `group`/`weight`, queues, `builder_level` | `https://kometa.wiki/en/nightly/files/overlays/`           |
+| Templates & external_templates                         | `https://kometa.wiki/en/nightly/files/templates/`          |
+| Builders (what items an overlay applies to)            | `https://kometa.wiki/en/nightly/files/builders/overview/`  |
+| Overlay defaults overview + shared variables           | `https://kometa.wiki/en/nightly/defaults/overlays/`        |
+| A specific overlay default (e.g. ratings, resolution)  | `https://kometa.wiki/en/nightly/defaults/overlays/<name>/` |
 
 See `references/overlay-attributes.md` for the positioning/precedence cheat-sheet
 that maps each concept to the source.
@@ -68,9 +68,8 @@ Then `WebFetch` the raw file, e.g.
 - This repo schedules overlays via `run_order` (`overlays` runs after
   `collections`/`metadata`/`operations`) and per-library `template_variables`.
   Read `config.yml`'s library blocks and mirror the existing overlay wiring.
-- `overlays/` is partially prettier-ignored (see `.prettierignore`) with explicit
-  re-includes for `overlays/audience_ratings.yml` and `overlays/media_info.yml` —
-  respect those exceptions.
+- Overlay YAML under `overlays/` is formatted by the oxfmt pre-commit hook (only
+  auto-generated `*_report.yml` is excluded); don't hand-format it.
 
 ## Step 3 — Author or edit
 
@@ -88,15 +87,19 @@ Then `WebFetch` the raw file, e.g.
 ## Step 4 — Validate
 
 ```bash
-yamllint <file>.yml                 # .yamllint: line-length 200, 2-space indent
-npx prettier --check "<file>.yml"   # .prettierrc.yml (respect .prettierignore re-includes)
-kometa --validate-file <file>.yml   # Kometa-native schema check (overlay schema) → validate.log
+mise run validate                                                                      # config.yml + all linked files, offline → validate.log
+mise run kometa -- --validate-file /config/overlays/<file>.yml --validate-level structure   # one overlay file, targeted
+oxfmt <file>.yml                                                                       # format (also auto-run by lefthook pre-commit)
 ```
 
-yamllint/prettier only check syntax/format; `kometa --validate-file` validates
-*Kometa* overlay semantics against the JSON schema (use `--validate-level full` for
-the deepest pass). It's standalone; bare `--validate` implies an immediate run, so
-don't use it as a dry check.
+These tasks run the pinned `kometateam/kometa:nightly` image in Docker (no local
+`kometa` install needed). The repo is mounted at `/config`, so `--validate-file`
+paths must be **`/config`-prefixed**. Prefer `mise run validate` — the overlay
+files are linked from config.yml, so it already covers them; it's also the check
+the lefthook **pre-push** hook enforces. `--validate-file` validates _Kometa_
+overlay semantics against the JSON schema offline; use `--validate-level full` for
+the deepest pass (connects to Plex/APIs). `oxfmt` (`.oxfmtrc.json`) replaces the
+old prettier/yamllint setup.
 
 Overlays are visual — YAML validity is necessary but not sufficient. For a real
 check, the `testing/` harness runs Kometa against a throwaway Plex and

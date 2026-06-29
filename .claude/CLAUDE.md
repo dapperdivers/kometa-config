@@ -9,6 +9,7 @@ This is a Kometa (formerly Plex Meta Manager) configuration repository for manag
 ## Key Architecture
 
 ### Configuration Structure
+
 - **config.yml**: Main configuration file defining libraries, settings, and integrations
 - **overlays/**: Custom overlay templates for visual enhancements (ratings, media info)
 - **custom/**: Custom collection definitions (e.g., movie subgenres)
@@ -16,37 +17,56 @@ This is a Kometa (formerly Plex Meta Manager) configuration repository for manag
 - **Report files**: YAML reports generated for each library (Movies_report.yml, etc.)
 
 ### Libraries Configuration
-The config uses YAML anchors (&) and references (*) for reusable configuration blocks:
+
+The config uses YAML anchors (&) and references (\*) for reusable configuration blocks:
+
 - `&movie_config` / `&tv_config`: Library-specific settings
 - `&run_order`: Shared execution order
 - `&movie_collections` / `&movie_overlays`: Collection and overlay file references
 
+## Toolchain (mise + lefthook)
+
+Tooling is pinned with **mise** (`.mise.toml` / `mise.lock`) and git hooks are run by
+**lefthook** (`.lefthook.toml`), matching the `dapper-cluster` pattern. After cloning:
+
+```bash
+mise install        # installs oxfmt, gitleaks, lefthook; postinstall runs `lefthook install`
+```
+
+- **pre-commit**: `oxfmt` formats staged YAML/JSON/Markdown (`.oxfmtrc.json`, replaces the
+  old prettier/yamllint setup) and `gitleaks` scans for secrets.
+- **pre-push**: `mise run validate` runs offline Kometa config validation when Kometa YAML
+  is part of the push.
+
 ## Common Development Tasks
 
 ### Validate YAML Configuration
-```bash
-# Check YAML syntax
-yamllint config.yml
-yamllint overlays/*.yml
-yamllint custom/*.yml
 
-# Or use Python
-python -m yaml config.yml
+```bash
+# Offline Kometa-native validation (config.yml + all linked files), no Plex/API connection.
+# Runs the pinned kometateam/kometa:nightly image in Docker — no local kometa install needed.
+mise run validate
+
+# Validate a single file (note the /config prefix — repo is mounted at /config):
+mise run kometa -- --validate-file /config/custom/movie_subgenre/action_adventure.yml --validate-level structure
+
+# Deepest pass (connects to Plex/APIs):
+mise run kometa -- --validate --validate-level full
 ```
 
 ### Run Kometa
+
 ```bash
-# Test configuration without making changes
-kometa --run-tests --config /path/to/config.yml
+# Generic passthrough to the Kometa CLI (Docker); pass any flags after --
+mise run kometa -- --run
 
-# Run specific libraries
-kometa --config /path/to/config.yml --library "Movies"
-
-# Run with specific operations
-kometa --config /path/to/config.yml --operations
+# Run specific libraries / operations
+mise run kometa -- --run-libraries "Movies"
+mise run kometa -- --operations-only
 ```
 
 ### Check Logs
+
 ```bash
 # View latest log
 tail -f logs/meta.log
@@ -59,22 +79,26 @@ grep -i warning logs/meta.log
 ## Important Configuration Notes
 
 ### Template Variables
+
 - Uses `<<VARIABLE>>` syntax for environment variables (e.g., `<<PLEX_HOST>>`)
 - Template variables in collection/overlay files use `<<variable_name>>` syntax
 - Conditionals use nested dictionary structure with `conditions` key
 
 ### Overlay System
+
 - **media_info.yml**: Creates overlays for resolution, video format, audio format, and editions
 - **audience_rating.yml**: Shows color-coded audience ratings (green >8, yellow >6, red <6)
 - Requires TRaSH naming convention for proper media detection
 
 ### Collection Files
+
 - Uses Kometa defaults with `default:` prefix
 - External templates from git repositories with `git:` prefix
 - Custom collections defined in `custom/` directory
 - Schedule collections using cron-like syntax (e.g., `weekly(monday)`)
 
 ### Scheduling and Visibility
+
 - **Critical Rule**: ONLY use official Kometa schedule options from https://kometa.wiki/en/latest/config/schedule/#important
 - `schedule` option controls when Kometa processes a collection (NOT when Kometa runs)
 - Collections with no `schedule` default to `daily`
@@ -83,54 +107,64 @@ grep -i warning logs/meta.log
 - **Problem Example**: `schedule: monthly(8)` but `visible_home: weekly(tuesday)` will skip processing on most Tuesdays
 
 #### Official Kometa Schedule Options (THESE ARE THE ONLY VALID OPTIONS)
-| Type | Description | Format | Examples |
-|------|-------------|--------|----------|
-| **Hourly** | Update in specific hour(s) | `hourly(Hour)` or `hourly(Start-End)` | `hourly(17)`, `hourly(17-04)` |
-| **Daily** | Update once daily | `daily` | `daily` |
-| **Weekly** | Update on specific days | `weekly(Days)` | `weekly(sunday)`, `weekly(sunday\|tuesday)` |
-| **Monthly** | Update on specific day of month | `monthly(Day)` | `monthly(1)` |
-| **Yearly** | Update on specific date | `yearly(MM/DD)` | `yearly(01/30)` |
-| **Date** | Update on specific date | `date(MM/DD/YYYY)` | `date(12/25/2024)` |
-| **Range** | Update within date range(s) | `range(MM/DD-MM/DD)` | `range(12/01-12/31)`, `range(8/01-8/15\|9/01-9/15)` |
-| **Never** | Never updates | `never` | `never` |
-| **Non Existing** | Updates if doesn't exist | `non_existing` | `non_existing` |
-| **All** | All conditions must be met | `all[Options]` | `all[weekly(sunday), hourly(17)]` |
+
+| Type             | Description                     | Format                                | Examples                                            |
+| ---------------- | ------------------------------- | ------------------------------------- | --------------------------------------------------- |
+| **Hourly**       | Update in specific hour(s)      | `hourly(Hour)` or `hourly(Start-End)` | `hourly(17)`, `hourly(17-04)`                       |
+| **Daily**        | Update once daily               | `daily`                               | `daily`                                             |
+| **Weekly**       | Update on specific days         | `weekly(Days)`                        | `weekly(sunday)`, `weekly(sunday\|tuesday)`         |
+| **Monthly**      | Update on specific day of month | `monthly(Day)`                        | `monthly(1)`                                        |
+| **Yearly**       | Update on specific date         | `yearly(MM/DD)`                       | `yearly(01/30)`                                     |
+| **Date**         | Update on specific date         | `date(MM/DD/YYYY)`                    | `date(12/25/2024)`                                  |
+| **Range**        | Update within date range(s)     | `range(MM/DD-MM/DD)`                  | `range(12/01-12/31)`, `range(8/01-8/15\|9/01-9/15)` |
+| **Never**        | Never updates                   | `never`                               | `never`                                             |
+| **Non Existing** | Updates if doesn't exist        | `non_existing`                        | `non_existing`                                      |
+| **All**          | All conditions must be met      | `all[Options]`                        | `all[weekly(sunday), hourly(17)]`                   |
 
 #### **CRITICAL**: DO NOT USE ANY OTHER SCHEDULE OPTIONS
+
 - ❌ **INVALID**: `quarterly`, `biweekly`, `bimonthly`, `every_other_day`, etc.
 - ✅ **VALID**: Only the options listed in the table above
 
 #### Community Best Practices:
+
 1. **Perfect Alignment**: `schedule: weekly(tuesday)` + `visible_home: weekly(tuesday)`
 2. **Multi-Day Weekly**: `schedule: daily` + `visible_home: weekly(monday)`
 3. **Broad Scheduling Window**: `schedule: weekly(monday|tuesday|wednesday)` + `visible_home: weekly(tuesday)`
+
 - **Preferred solution**: Use broader scheduling windows around visibility days to ensure collection processes when needed
 
 ### Known Issues to Check
+
 1. **YAML Syntax**: Line 380 in config.yml has trailing space after `tmdb:`
 2. **Collection Names**: Line 1395 in movie_subgenre.yml has extra quote in `Superhero"`
 3. **Indentation**: Inconsistent indentation in some template blocks
 4. **Playlist Settings**: Misplaced `run_order` block under `playlist_exclude_users`
 
 ### Range Schedule Syntax - CRITICAL FINDINGS
+
 **Issue**: Multiple range() functions in a single schedule parameter cause parsing errors.
 
 **❌ INCORRECT SYNTAX** (causes "failed to parse schedule" errors):
+
 ```yaml
-schedule: range(01/01-01/31,05/01-05/31,09/01-09/30)  # Commas inside parentheses fail
+schedule: range(01/01-01/31,05/01-05/31,09/01-09/30) # Commas inside parentheses fail
 ```
 
 **✅ CORRECT SYNTAX** (multiple ranges using pipe separator):
+
 ```yaml
-schedule: range(01/01-01/31|05/01-05/31|09/01-09/30)  # Use pipes, not commas
+schedule: range(01/01-01/31|05/01-05/31|09/01-09/30) # Use pipes, not commas
 ```
 
 **✅ ALTERNATIVE CORRECT SYNTAX** (separate range functions):
+
 ```yaml
-schedule: range(01/01-01/31),range(05/01-05/31),range(09/01-09/30)  # Separate functions
+schedule: range(01/01-01/31),range(05/01-05/31),range(09/01-09/30) # Separate functions
 ```
 
 **Root Cause**: Kometa's schedule parser expects either:
+
 1. Single range with pipe-separated periods: `range(period1|period2|period3)`
 2. Multiple range functions: `range(period1),range(period2),range(period3)`
 3. NOT comma-separated periods within single parentheses
@@ -138,7 +172,9 @@ schedule: range(01/01-01/31),range(05/01-05/31),range(09/01-09/30)  # Separate f
 This syntax error affects all actor, director, producer, and writer collection schedules that use quarterly rotation patterns.
 
 ## API Integrations
+
 The configuration integrates with multiple services requiring API keys:
+
 - **Plex**: Media server (`<<PLEX_HOST>>`, `<<PLEX_API_KEY>>`)
 - **TMDb**: Movie/TV metadata (`<<TMDB_API_KEY>>`)
 - **Trakt**: Collection and list data (`<<TRAKT_CLIENT_ID>>`, etc.)
@@ -148,6 +184,7 @@ The configuration integrates with multiple services requiring API keys:
 - **MDbList**: Ratings and lists (`<<MDBLIST_API_KEY>>`)
 
 ## Testing Changes
+
 1. Always validate YAML syntax before committing
 2. Test overlay changes on a small subset first
 3. Use `--dry-run` or `--test` flags when available
@@ -155,6 +192,7 @@ The configuration integrates with multiple services requiring API keys:
 5. Verify template variable substitution is working correctly
 
 ## Asset Management
+
 - Assets stored in `/assets/` with library-specific subdirectories
 - Original posters backed up in `overlays/4k-Movies Original Posters/` etc.
 - Overlay images in `overlays/images/` organized by type

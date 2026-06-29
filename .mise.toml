@@ -1,0 +1,20 @@
+[tools]
+# Formatting, linting & git hooks (invoked by lefthook — see .lefthook.toml)
+oxfmt = "0.56.0"
+gitleaks = "8.30.1"
+"aqua:evilmartians/lefthook" = "2.1.9"
+
+[hooks]
+# Wire up git hooks automatically after `mise install`
+postinstall = "lefthook install"
+
+[tasks.kometa]
+description = "Run the Kometa CLI (Docker) against this config — pass flags after --"
+dir = "{{config_root}}"
+# Repo is mounted at /config; for --validate-file pass /config-prefixed paths.
+run = "docker run --rm -v {{config_root}}:/config kometateam/kometa:nightly {{arg(name='args', var=true, default='')}}"
+
+[tasks.validate]
+description = "Validate config.yml + all linked YAML offline (no Plex/API connection)"
+dir = "{{config_root}}"
+run = "docker run --rm -v {{config_root}}:/config kometateam/kometa:nightly --validate --validate-level structure"

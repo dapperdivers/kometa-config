@@ -30,15 +30,15 @@ This repo runs **nightly**. Bases (never `latest`/`master`):
 
 Fetch the page(s) that match the task with `WebFetch`:
 
-| Task | Doc URL |
-|------|---------|
-| Config file overview / top-level structure | `https://kometa.wiki/en/nightly/config/overview/` |
-| Libraries block | `https://kometa.wiki/en/nightly/config/libraries/` |
-| Global & library settings | `https://kometa.wiki/en/nightly/config/settings/` |
+| Task                                         | Doc URL                                             |
+| -------------------------------------------- | --------------------------------------------------- |
+| Config file overview / top-level structure   | `https://kometa.wiki/en/nightly/config/overview/`   |
+| Libraries block                              | `https://kometa.wiki/en/nightly/config/libraries/`  |
+| Global & library settings                    | `https://kometa.wiki/en/nightly/config/settings/`   |
 | Operations (split roles, mass updates, etc.) | `https://kometa.wiki/en/nightly/config/operations/` |
-| Playlists | `https://kometa.wiki/en/nightly/config/playlists/` |
-| Schedule (run-time scheduling concepts) | `https://kometa.wiki/en/nightly/config/schedule/` |
-| A specific integration | see `references/integrations.md` |
+| Playlists                                    | `https://kometa.wiki/en/nightly/config/playlists/`  |
+| Schedule (run-time scheduling concepts)      | `https://kometa.wiki/en/nightly/config/schedule/`   |
+| A specific integration                       | see `references/integrations.md`                    |
 
 `references/integrations.md` has the per-service doc URLs and the placeholder
 variables this repo uses.
@@ -61,7 +61,7 @@ variables this repo uses.
   `/config` in the Kometa container). Wire new files as
   `collection_files: / overlay_files: / metadata_files: - file: /config/...`.
 - **Don't touch generated files.** `*_report.yml` and `logs/` are auto-generated
-  (prettier-ignored) — never hand-edit them.
+  (and excluded from the oxfmt hook) — never hand-edit them.
 
 ## Step 3 — Author or edit
 
@@ -71,7 +71,7 @@ variables this repo uses.
   truly needed, define a new anchor rather than duplicating literals.
 - For a new integration, add the minimal connection block from that service's doc
   page using `<<PLACEHOLDER>>` variables, then note which env vars must be set.
-- Defer collection/overlay *content* to the **kometa-collections** /
+- Defer collection/overlay _content_ to the **kometa-collections** /
   **kometa-overlays** skills; this skill owns the wiring and global behavior.
 - Defer `schedule` / `visible_*` timing to the **kometa-scheduling** skill.
 - **Recommendation Hub ordering** (Plex Pass): `auto_sort_hubs` (global/library
@@ -85,22 +85,24 @@ variables this repo uses.
 ## Step 4 — Validate
 
 ```bash
-yamllint config.yml                 # .yamllint: line-length 200, 2-space indent, key-duplicates on
-npx prettier --check config.yml     # .prettierrc.yml: double quotes, no bracket spacing
-kometa --validate-file config.yml   # Kometa-native config schema check → validate.log
+mise run validate                   # Kometa-native check of config.yml + all linked files, offline → validate.log
+oxfmt config.yml                     # format (also auto-run by the lefthook pre-commit hook)
 ```
 
-`kometa --validate-file` validates the config against `config-schema.json` (unknown
-keys, wrong types, missing required fields) — far stronger than yamllint/prettier,
-which only check syntax/format. Use `--validate-level full` for the deepest pass.
-Note: `--validate-file` is standalone, but bare `--validate` implies an immediate
-run, so don't use it as a dry check.
+`mise run validate` runs the pinned `kometateam/kometa:nightly` image in Docker
+(no local `kometa` install needed) with `--validate --validate-level structure`:
+it checks config.yml against `config-schema.json` (unknown keys, wrong types,
+missing required fields, deprecated settings) without connecting to Plex/APIs.
+This is the same check the lefthook **pre-push** hook enforces. For the deepest
+pass — which _does_ connect to Plex and the APIs — run
+`mise run kometa -- --validate --validate-level full`.
 
-`yamllint` here has `key-duplicates: enable` — duplicate keys are a real error,
-common when copy-pasting library/integration blocks; watch for it. For a live
-check, the `testing/` Docker harness (`testing/docker-compose.yml`,
-`kometateam/kometa:latest`) runs the full config against a throwaway Plex.
-Validate YAML before suggesting a run, and never run against production Plex to "test."
+`oxfmt` (formatter, `.oxfmtrc.json`) replaces the old prettier/yamllint setup and
+will fail to parse malformed YAML; duplicate keys are still a real error, common
+when copy-pasting library/integration blocks, so watch for them. For a live run,
+the `testing/` Docker harness (`testing/docker-compose.yml`) applies the full
+config against a throwaway Plex. Validate YAML before suggesting a run, and never
+run against production Plex to "test."
 
 ## Output
 
