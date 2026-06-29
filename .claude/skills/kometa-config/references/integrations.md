@@ -43,3 +43,17 @@ ntfy, Webhooks.
   `config/gotify/`) — wire them per-doc.
 - When adding a service, list the env vars the user must define so the
   `<<PLACEHOLDER>>` substitution resolves.
+
+## Operations sources worth knowing (2.4.x)
+
+Confirm exact keys on `https://kometa.wiki/en/nightly/config/operations/` before use.
+
+- **`plex_csm` / `plex_csm0`** — sources for `mass_content_rating_update` that read the
+  Common Sense Media age rating from Plex's own cached `commonSenseMedia.ageRatings`,
+  **no API key**. Prefer it ahead of `mdb_commonsense` (which needs an MDbList key) in
+  the priority list to cut external calls: `[plex_csm, mdb_commonsense, omdb]`.
+- **`mass_poster_update` / `mass_background_update`** — accept a `language:` sub-key
+  (TMDb only). `language: xx` fetches **textless** poster/background art.
+  ⚠ With overlays, this resets the poster and reapplies all overlays each run → image
+  bloat / longer runtime. Mitigate with `ignore_locked: true` and an infrequent
+  `schedule` (e.g. `monthly(last)`); local assets still win under `prioritize_assets`.

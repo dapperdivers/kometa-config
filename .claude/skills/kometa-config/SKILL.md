@@ -74,13 +74,27 @@ variables this repo uses.
 - Defer collection/overlay *content* to the **kometa-collections** /
   **kometa-overlays** skills; this skill owns the wiring and global behavior.
 - Defer `schedule` / `visible_*` timing to the **kometa-scheduling** skill.
+- **Recommendation Hub ordering** (Plex Pass): `auto_sort_hubs` (global/library
+  setting — `configured` / `alpha` / `random`, each ±`.desc`) sorts the home-screen
+  hub rows after processing; it only affects collections promoted via `visible_home`
+  / `visible_shared`. Pin individual collections to the top with the `hub_priority`
+  attribute (lower = higher; also available as a `hub_priority` template variable on
+  defaults, and `hub_priority_<<key>>` for dynamic keys). Confirm on the settings doc
+  and `defaults/templates.yml` source before use.
 
 ## Step 4 — Validate
 
 ```bash
 yamllint config.yml                 # .yamllint: line-length 200, 2-space indent, key-duplicates on
 npx prettier --check config.yml     # .prettierrc.yml: double quotes, no bracket spacing
+kometa --validate-file config.yml   # Kometa-native config schema check → validate.log
 ```
+
+`kometa --validate-file` validates the config against `config-schema.json` (unknown
+keys, wrong types, missing required fields) — far stronger than yamllint/prettier,
+which only check syntax/format. Use `--validate-level full` for the deepest pass.
+Note: `--validate-file` is standalone, but bare `--validate` implies an immediate
+run, so don't use it as a dry check.
 
 `yamllint` here has `key-duplicates: enable` — duplicate keys are a real error,
 common when copy-pasting library/integration blocks; watch for it. For a live

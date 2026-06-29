@@ -90,7 +90,13 @@ Then `WebFetch` the raw file, e.g.
 ```bash
 yamllint <file>.yml                 # .yamllint: line-length 200, 2-space indent
 npx prettier --check "<file>.yml"   # .prettierrc.yml (respect .prettierignore re-includes)
+kometa --validate-file <file>.yml   # Kometa-native schema check (overlay schema) → validate.log
 ```
+
+yamllint/prettier only check syntax/format; `kometa --validate-file` validates
+*Kometa* overlay semantics against the JSON schema (use `--validate-level full` for
+the deepest pass). It's standalone; bare `--validate` implies an immediate run, so
+don't use it as a dry check.
 
 Overlays are visual — YAML validity is necessary but not sufficient. For a real
 check, the `testing/` harness runs Kometa against a throwaway Plex and

@@ -101,7 +101,15 @@ Match this repo's established conventions before adding anything:
 ```bash
 yamllint <file>.yml                 # config in .yamllint (line-length 200, 2-space indent)
 npx prettier --check "<file>.yml"   # config in .prettierrc.yml (double quotes, no bracket spacing)
+kometa --validate-file <file>.yml   # Kometa-native schema check, auto-detects type → validate.log
 ```
+
+yamllint/prettier only check syntax/format; `kometa --validate-file` validates
+*Kometa* semantics (unknown keys, wrong types) against the per-type JSON schema and
+is the strongest pre-run check. Use `--validate-level full` for the deepest pass and
+`--validate-dir <dir>` to batch a folder. `--validate-file`/`--validate-dir` are
+standalone; bare `--validate` (whole `config.yml`) implies an immediate run, so don't
+use it as a dry check.
 
 `*_report.yml` and `logs/` are auto-generated and prettier-ignored — don't edit
 or lint those. For a real run, the `testing/` Docker harness applies the config

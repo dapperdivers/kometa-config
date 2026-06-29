@@ -74,6 +74,7 @@ libraries: # This is called out once within the config.yml file
         template_variables:
           visible_home: range(02/01-04/15)
           visible_shared: range(02/01-04/15)
+          hub_priority: 3 # float Oscars near the top of the home row during its window (lower = higher)
       - default: spirit # Independent Spirit Awards
         schedule: range(02/15-03/31) # Spirit Awards season
         template_variables:
@@ -84,6 +85,7 @@ libraries: # This is called out once within the config.yml file
         template_variables:
           visible_home: range(01/15-02/15)
           visible_shared: range(01/15-02/15)
+          hub_priority: 5 # surface during Sundance season, just below Oscars
       - default: separator_chart # An "index card"
       - default: imdb # IMDb Charts (Popular, Trending, etc.)
         schedule: weekly(saturday|sunday|monday|tuesday|wednesday)
@@ -244,8 +246,9 @@ libraries: # This is called out once within the config.yml file
       - &id006
         schedule: monthly(22)
         mass_content_rating_update:
-          - mdb_commonsense # Changes Content Rating to "1", "2" etc. to specify appropriate age
-          - omdb # Changes Content Rating from omdb if not found on mdb_commonsense
+          - plex_csm # Common Sense age rating from Plex's own cache — no API key
+          - mdb_commonsense # fallback via MDbList if Plex hasn't cached it
+          - omdb # final fallback if not found on plex_csm/mdb_commonsense
       - &id007
         schedule: yearly(01/01)
         mass_studio_update:
@@ -258,6 +261,12 @@ libraries: # This is called out once within the config.yml file
           - tmdb # Update all original available date from tmdb
           - tvdb # Update all original available date from tvdb if not from tmdb
           - omdb # Update all original available date from omdb(imdb) if not from tvdb
+      - &id009
+        schedule: monthly(last) # heavy with overlays (resets poster + reapplies overlays); run once a month
+        mass_poster_update:
+          source: tmdb
+          language: xx # textless poster art from TMDb
+          ignore_locked: true # skip posters already locked by overlays → avoids re-pull churn
     radarr:
       url: <<RADARR_HOST>>
       token: <<RADARR_API_KEY>>
@@ -307,6 +316,7 @@ libraries: # This is called out once within the config.yml file
         template_variables:
           visible_home: range(08/01-10/15)
           visible_shared: range(08/01-10/15)
+          hub_priority: 3 # float Emmys to the top of the TV home row during Emmy season
       - default: separator_chart # An "index card"
       - default: anilist # AniDB Charts (Popular, Trending, etc.)
         schedule: weekly(saturday|sunday|monday|tuesday|wednesday)
@@ -431,7 +441,7 @@ libraries: # This is called out once within the config.yml file
           back_color: "#00000000"
       - remove_overlays: false
     operations:
-      <<: [*id001, *id002, *id003, *id004, *id005, *id006, *id007, *id008]
+      <<: [*id001, *id002, *id003, *id004, *id005, *id006, *id007, *id008, *id009]
     sonarr:
       url: <<SONARR_HOST>>
       token: <<SONARR_API_KEY>>
@@ -459,6 +469,7 @@ settings:
   show_asset_not_needed: true
   sync_mode: append
   minimum_items: 5
+  auto_sort_hubs: configured # sort home-screen hub rows by config order; affects collections promoted via visible_home/_shared (Plex Pass)
   default_collection_order:
   delete_below_minimum: true
   delete_not_scheduled: false

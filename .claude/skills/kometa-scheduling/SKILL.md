@@ -40,7 +40,7 @@ Do not invent options. There is no `quarterly`, `biweekly`, `bimonthly`,
 | Hourly | `hourly(H)` / `hourly(Start-End)` | `hourly(17)`, `hourly(17-04)` |
 | Daily | `daily` | `daily` |
 | Weekly | `weekly(Days)` | `weekly(sunday)`, `weekly(sunday\|tuesday)` |
-| Monthly | `monthly(Day)` | `monthly(1)` |
+| Monthly | `monthly(Day)` / `monthly(last)` | `monthly(1)`, `monthly(last)` |
 | Yearly | `yearly(MM/DD)` | `yearly(01/30)` |
 | Date | `date(MM/DD/YYYY)` | `date(12/25/2024)` |
 | Range | `range(MM/DD-MM/DD)` | `range(12/01-12/31)` |
@@ -57,6 +57,18 @@ Multiple periods in one `range()` must be **pipe-separated**, not comma-separate
 - ✅ or separate functions: `range(01/01-01/31),range(05/01-05/31)`
 
 This affects every rotation-style schedule (actor/director/seasonal/etc.).
+
+## End-of-month: `monthly(last)` and the `monthly(N)` change
+
+Use `monthly(last)` to fire on the **last day of every month** regardless of length
+(Feb 28/29, the 30th, or the 31st). Prefer it over guessing `monthly(28/30/31)`.
+
+`monthly(N)` no longer falls back to the last day when day N doesn't exist that
+month — it now **skips and logs a warning** (e.g. `Schedule Warning: monthly(31)
+will not run this month; November does not have a 31st day`). So `monthly(31)`
+silently won't run in 30-day months. (This repo's ops use `monthly(1|8|15|22)`,
+which exist in every month, so they're unaffected — but anything ≥ 29 should move
+to `monthly(last)`.)
 
 ## Step 1 — Confirm against source when unsure
 
@@ -87,13 +99,16 @@ keep the per-file day assignment consistent with the comments in `config.yml`.
 ## Step 3 — Validate
 
 ```bash
-yamllint <file>.yml     # catches quoting/indent issues around schedule strings
+yamllint <file>.yml                    # catches quoting/indent around schedule strings
+kometa --validate-file <file>.yml      # Kometa-native schema check (standalone) → validate.log
 ```
 
-`yamllint` won't catch a *semantically* wrong schedule (e.g. invalid option,
-comma-in-range, or window narrower than visibility) — those only surface as
-"failed to parse schedule" or a silently-missing collection in `logs/meta.log`
-at run time. So manually re-check every change against the two invariants:
+`kometa --validate-file` catches schema-level mistakes (bad keys/types, and many
+malformed schedule strings), but it can't know your *intent* — a window narrower
+than its `visible_*` day is valid YAML and valid schema, yet still wrong. Those
+logic errors only surface as "failed to parse schedule" or a silently-missing
+collection in `logs/meta.log` at run time. So manually re-check every change
+against the two invariants:
 
 1. Option is in the valid-options table (or confirmed in the nightly docs).
 2. `schedule` window covers every `visible_home` / `visible_shared` day.

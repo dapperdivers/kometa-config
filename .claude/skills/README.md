@@ -20,8 +20,10 @@ moves fast.
   `gh api "repos/Kometa-Team/Kometa/git/trees/nightly?recursive=1" --jq '.tree[].path | select(...)'`.
 - **In-container paths:** files referenced as `/config/...` (repo root mounts at
   `/config`).
-- **Validate:** `yamllint <file>` (`.yamllint`) + `npx prettier --check` (`.prettierrc.yml`);
-  never edit `*_report.yml` or `logs/` (generated/ignored).
+- **Validate:** `yamllint <file>` (`.yamllint`) + `npx prettier --check` (`.prettierrc.yml`)
+  for syntax/format, then `kometa --validate-file <file>` for Kometa-native schema
+  validation (current as of Kometa 2.4.x / nightly); never edit `*_report.yml` or `logs/`
+  (generated/ignored).
 - **Live test:** `testing/` Docker harness (`testing/docker-compose.yml`,
   `testing/test-overlays.sh`) runs against a throwaway Plex — never test against
   production.
