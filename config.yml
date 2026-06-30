@@ -30,61 +30,61 @@ libraries: # This is called out once within the config.yml file
         schedule: weekly(monday)
       - default: separator_award # An "index card"
       - default: pca # People's Choice Awards
-        schedule: range(11/01-12/31) # PCA season
+        schedule: &win_pca range(11/01-12/31) # PCA season
         template_variables:
-          visible_home: range(11/01-12/31)
-          visible_shared: range(11/01-12/31)
+          visible_home: *win_pca
+          visible_shared: *win_pca
       - default: sag # Screen Actors Guild Awards
-        schedule: range(01/15-02/15) # SAG season
+        schedule: &win_sag range(01/15-02/15) # SAG season
         template_variables:
-          visible_home: range(01/15-02/15)
-          visible_shared: range(01/15-02/15)
+          visible_home: *win_sag
+          visible_shared: *win_sag
       - default: tiff # Toronto International Film Festival Awards
-        schedule: range(09/01-10/15) # TIFF season
+        schedule: &win_tiff range(09/01-10/15) # TIFF season
         template_variables:
-          visible_home: range(09/01-10/15)
-          visible_shared: range(09/01-10/15)
+          visible_home: *win_tiff
+          visible_shared: *win_tiff
       - default: bafta # BAFTA Awards
-        schedule: range(01/01-02/28) # BAFTA season
+        schedule: &win_bafta range(01/01-02/28) # BAFTA season
         template_variables:
-          visible_home: range(01/01-02/28)
-          visible_shared: range(01/01-02/28)
+          visible_home: *win_bafta
+          visible_shared: *win_bafta
       - default: cannes # Cannes Film Festival Awards
-        schedule: range(05/01-06/15) # Cannes season
+        schedule: &win_cannes range(05/01-06/15) # Cannes season
         template_variables:
-          visible_home: range(05/01-06/15)
-          visible_shared: range(05/01-06/15)
+          visible_home: *win_cannes
+          visible_shared: *win_cannes
       - default: choice # Critic's Choice Awards
-        schedule: range(01/01-02/15) # Critics Choice season
+        schedule: &win_choice range(01/01-02/15) # Critics Choice season
         template_variables:
-          visible_home: range(01/01-02/15)
-          visible_shared: range(01/01-02/15)
+          visible_home: *win_choice
+          visible_shared: *win_choice
       - default: emmy # Emmy Awards
-        schedule: range(08/01-10/15) # Emmy season
+        schedule: &win_emmy range(08/01-10/15) # Emmy season
         template_variables:
-          visible_home: range(08/01-10/15)
-          visible_shared: range(08/01-10/15)
+          visible_home: *win_emmy
+          visible_shared: *win_emmy
       - default: golden # Golden Globes Awards
-        schedule: range(12/01-01/31) # Golden Globes season
+        schedule: &win_golden range(12/01-01/31) # Golden Globes season
         template_variables:
-          visible_home: range(12/01-01/31)
-          visible_shared: range(12/01-01/31)
+          visible_home: *win_golden
+          visible_shared: *win_golden
       - default: oscars # The Oscars
-        schedule: range(02/01-04/15) # Oscar season
+        schedule: &win_oscars range(02/01-04/15) # Oscar season
         template_variables:
-          visible_home: range(02/01-04/15)
-          visible_shared: range(02/01-04/15)
+          visible_home: *win_oscars
+          visible_shared: *win_oscars
           hub_priority: 3 # float Oscars near the top of the home row during its window (lower = higher)
       - default: spirit # Independent Spirit Awards
-        schedule: range(02/15-03/31) # Spirit Awards season
+        schedule: &win_spirit range(02/15-03/31) # Spirit Awards season
         template_variables:
-          visible_home: range(02/15-03/31)
-          visible_shared: range(02/15-03/31)
+          visible_home: *win_spirit
+          visible_shared: *win_spirit
       - default: sundance # Sundance Film Festival Awards
-        schedule: range(01/15-02/15) # Sundance season
+        schedule: &win_sundance range(01/15-02/15) # Sundance season
         template_variables:
-          visible_home: range(01/15-02/15)
-          visible_shared: range(01/15-02/15)
+          visible_home: *win_sundance
+          visible_shared: *win_sundance
           hub_priority: 5 # surface during Sundance season, just below Oscars
       - default: separator_chart # An "index card"
       - default: imdb # IMDb Charts (Popular, Trending, etc.)
@@ -110,7 +110,7 @@ libraries: # This is called out once within the config.yml file
       - default: collectionless # Collectionless collection to help Show/Hide Movies/Shows properly in your library
         schedule: weekly(sunday)
       - default: actor
-        template_variables:
+        template_variables: &birthday_actor
           collection_section: "001"
           use_separator: false
           style: diiivoycolor
@@ -124,41 +124,35 @@ libraries: # This is called out once within the config.yml file
           tmdb_birthday:
             this_month: true
       - default: actor # Actors
-        schedule: range(01/01-01/31),range(05/01-05/31),range(09/01-09/30) # Months 1,5,9
+        schedule: &win_actor_rot range(01/01-01/31),range(05/01-05/31),range(09/01-09/30) # Months 1,5,9
         template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
-          visible_home: range(01/01-01/31),range(05/01-05/31),range(09/01-09/30)
-          visible_shared: range(01/01-01/31),range(05/01-05/31),range(09/01-09/30)
-          data:
+          visible_home: *win_actor_rot
+          visible_shared: *win_actor_rot
+          data: &sig_data
             depth: 1
             limit: 15
       - default: director # Directors
-        schedule: range(02/01-02/28),range(06/01-06/30),range(10/01-10/31) # Months 2,6,10
+        schedule: &win_director_rot range(02/01-02/28),range(06/01-06/30),range(10/01-10/31) # Months 2,6,10
         template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
-          visible_home: range(02/01-02/28),range(06/01-06/30),range(10/01-10/31)
-          visible_shared: range(02/01-02/28),range(06/01-06/30),range(10/01-10/31)
-          data:
-            depth: 1
-            limit: 15
+          visible_home: *win_director_rot
+          visible_shared: *win_director_rot
+          data: *sig_data
       - default: producer # Producers
-        schedule: range(03/01-03/31),range(07/01-07/31),range(11/01-11/30) # Months 3,7,11
+        schedule: &win_producer_rot range(03/01-03/31),range(07/01-07/31),range(11/01-11/30) # Months 3,7,11
         template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
-          visible_home: range(03/01-03/31),range(07/01-07/31),range(11/01-11/30)
-          visible_shared: range(03/01-03/31),range(07/01-07/31),range(11/01-11/30)
-          data:
-            depth: 1
-            limit: 15
+          visible_home: *win_producer_rot
+          visible_shared: *win_producer_rot
+          data: *sig_data
       - default: writer # Writers
-        schedule: range(04/01-04/30),range(08/01-08/31),range(12/01-12/31) # Months 4,8,12
+        schedule: &win_writer_rot range(04/01-04/30),range(08/01-08/31),range(12/01-12/31) # Months 4,8,12
         template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
-          visible_home: range(04/01-04/30),range(08/01-08/31),range(12/01-12/31)
-          visible_shared: range(04/01-04/30),range(08/01-08/31),range(12/01-12/31)
-          data:
-            depth: 1
-            limit: 15
+          visible_home: *win_writer_rot
+          visible_shared: *win_writer_rot
+          data: *sig_data
       - default: genre # Action, Comedy, Drama, etc.
         schedule: weekly(monday|tuesday|wednesday)
       - default: studio # DreamWorks Studios, Lucasfilm Ltd, etc.
@@ -291,25 +285,25 @@ libraries: # This is called out once within the config.yml file
       - git: bullmoose20/tv_refresh # Tells plex to refresh media items added within the last 7 days
       - default: separator_award # An "index card"
       - default: pca # People's Choice Awards
-        schedule: range(11/01-12/31) # PCA season
+        schedule: *win_pca # PCA season
         template_variables:
-          visible_home: range(11/01-12/31)
-          visible_shared: range(11/01-12/31)
+          visible_home: *win_pca
+          visible_shared: *win_pca
       - default: choice # Critic's Choice Awards
-        schedule: range(01/01-02/15) # Critics Choice season
+        schedule: *win_choice # Critics Choice season
         template_variables:
-          visible_home: range(01/01-02/15)
-          visible_shared: range(01/01-02/15)
+          visible_home: *win_choice
+          visible_shared: *win_choice
       - default: golden # Golden Globes Awards
-        schedule: range(12/01-01/31) # Golden Globes season
+        schedule: *win_golden # Golden Globes season
         template_variables:
-          visible_home: range(12/01-01/31)
-          visible_shared: range(12/01-01/31)
+          visible_home: *win_golden
+          visible_shared: *win_golden
       - default: emmy # Emmy Awards
-        schedule: range(08/01-10/15) # Emmy season
+        schedule: *win_emmy # Emmy season
         template_variables:
-          visible_home: range(08/01-10/15)
-          visible_shared: range(08/01-10/15)
+          visible_home: *win_emmy
+          visible_shared: *win_emmy
           hub_priority: 3 # float Emmys to the top of the TV home row during Emmy season
       - default: separator_chart # An "index card"
       - default: anilist # AniDB Charts (Popular, Trending, etc.)
@@ -338,26 +332,12 @@ libraries: # This is called out once within the config.yml file
       - default: collectionless # Collectionless collection to help Show/Hide Movies/Shows properly in your library
         schedule: weekly(sunday)
       - default: actor
-        template_variables:
-          collection_section: "001"
-          use_separator: false
-          style: diiivoycolor
-          name_format: 🎂 <<key_name>>'s Birthday
-          translation_key: birthday
-          sort_by: audience_rating.desc
-          title_format: <<key_name>>'s Birthday
-          data:
-            depth: 20
-            limit: 100
-          tmdb_birthday:
-            this_month: true
+        template_variables: *birthday_actor
       - default: actor # Actors
         schedule: weekly(monday)
         template_variables: # bw, rainier, diiivoy, diiivoycolor, or orig style is used.
           style: signature
-          data:
-            depth: 1
-            limit: 15
+          data: *sig_data
       - default: genre # Action, Comedy, Drama, etc.
         schedule: weekly(monday|tuesday|wednesday)
       - default: studio # DreamWorks Studios, Lucasfilm Ltd, etc.
