@@ -5,11 +5,6 @@ libraries: # This is called out once within the config.yml file
       asset_directory: /assets/Movies
       prioritize_assets: true
       minimum_items: 5
-    run_order: &run_order
-      - collections
-      - metadata
-      - operations
-      - overlays
     template_variables:
       sep_style: gray # use the gray separators globally for this library
       collection_mode: hide # hide the collections
@@ -267,11 +262,10 @@ libraries: # This is called out once within the config.yml file
       availability: announced
       quality_profile: HD Bluray + WEB
   TV Shows:
-    schedule_overlays: weekly(sunday|wednesday) # episode overlays are the expensive pass; run it 2x/week, leave overlays in place otherwise
+    schedule_overlays: weekly(sunday) # episode overlay pass is expensive (~5h); run 1x/week to stay well under the job deadline, overlays persist otherwise
     settings:
       <<: *kometa_settings
       asset_directory: /assets/TV Shows
-    run_order: *run_order
     template_variables:
       sep_style: gray # use the gray separators globally for this library
       collection_mode: hide # hide the collections
@@ -521,9 +515,15 @@ gotify:
   url:
   token:
 ntfy:
-  url:
-  token:
-  topic:
+  url: http://ntfy.network.svc.cluster.local:8080 # internal ntfy, no egress
+  token: <<NTFY_TOKEN>> # reuses cluster NTFY_TOKEN (carport user, all topics) via kometa-secret
+  topic: kometa
+webhooks:
+  error: ntfy # errors/failures during a run
+  run_start: ntfy # daily run begins
+  run_end: ntfy # daily run finished (includes added/removed summary)
+  # changes: ntfy  # intentionally OFF — fires per metadata change, far too noisy
+  # NOTE: a hung run never reaches run_end/error; the cluster KubeJobFailed -> ntfy alert covers that gap.
 mal:
   client_id:
   client_secret:
