@@ -254,7 +254,7 @@ libraries: # This is called out once within the config.yml file
       url: <<RADARR_HOST>>
       token: <<RADARR_API_KEY>>
       add_missing: false
-      add_existing: true
+      add_existing: false # true leaked 4K-library items into the std instance at movies-4k paths
       root_folder_path: <<RADARR_ROOT_FOLDER_PATH>>
       monitor: true
       monitor_existing: true
@@ -414,7 +414,7 @@ libraries: # This is called out once within the config.yml file
       url: <<SONARR_HOST>>
       token: <<SONARR_API_KEY>>
       add_missing: false
-      add_existing: true
+      add_existing: false # true leaked 4K-library items into the std instance at tv-4k paths
       root_folder_path: <<SONARR_ROOT_FOLDER_PATH>>
       monitor: all
       quality_profile: WEB-1080p
