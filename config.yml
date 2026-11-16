@@ -306,9 +306,6 @@ libraries: # This is called out once within the config.yml file
       - default: imdb # IMDb Charts (Popular, Trending, etc.)
         schedule: weekly(saturday|sunday|monday|tuesday|wednesday)
         template_variables: *daily_visibility
-      - default: myanimelist # MAL Charts (Popular, Trending, etc.)
-        schedule: weekly(monday|tuesday|wednesday|thursday|friday)
-        template_variables: *daily_visibility
       - default: other_chart # Other Charts (Popular, Trending, etc.)
         schedule: daily
         template_variables: *daily_visibility
@@ -317,9 +314,6 @@ libraries: # This is called out once within the config.yml file
         template_variables: *daily_visibility
       - default: tmdb # TMDb Charts (Popular, Trending, etc.)
         schedule: weekly(wednesday|thursday|friday|saturday|sunday)
-        template_variables: *daily_visibility
-      - default: trakt # Trakt Charts (Popular, Trending, etc.)
-        schedule: weekly(thursday|friday|saturday|sunday|monday)
         template_variables: *daily_visibility
       - default: basic # Some basic chart collections based on recently released media in your library
         schedule: weekly(sunday)
@@ -494,26 +488,6 @@ omdb:
 mdblist:
   apikey: <<MDBLIST_API_KEY>>
   cache_expiration: 60
-trakt:
-  cache_expiration: 60
-  force_refresh: false
-  client_id: <<TRAKT_CLIENT_ID>>
-  client_secret: <<TRAKT_CLIENT_SECRET>>
-  pin: # Add your Trakt PIN here after visiting the authorization URL shown in logs
-  authorization:
-    access_token: <<TRAKT_ACCESS_TOKEN>>
-    token_type: Bearer
-    expires_in: <<TRAKT_EXPIRES_IN>>
-    refresh_token: <<TRAKT_REFRESH_TOKEN>>
-    scope: public
-    created_at: <<TRAKT_CREATED_AT>>
-  # Notification services - commented out to prevent connection errors
-  # Uncomment and configure with actual values when ready to use
-notifiarr:
-  apikey:
-gotify:
-  url:
-  token:
 ntfy:
   url: http://ntfy.network.svc.cluster.local:8080 # internal ntfy, no egress
   token: <<NTFY_TOKEN>> # reuses cluster NTFY_TOKEN (carport user, all topics) via kometa-secret
@@ -524,8 +498,5 @@ webhooks:
   run_end: ntfy # daily run finished (includes added/removed summary)
   # changes: ntfy  # intentionally OFF — fires per metadata change, far too noisy
   # NOTE: a hung run never reaches run_end/error; the cluster KubeJobFailed -> ntfy alert covers that gap.
-mal:
-  client_id:
-  client_secret:
 playlist_files:
 #  - file: path/to/playlist.yml

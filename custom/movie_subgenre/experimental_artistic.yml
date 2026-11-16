@@ -55,7 +55,6 @@ collections:
       imdb_extra_1: "https://www.imdb.com/list/ls066069214"
       keyword: "mindbender"
       letterboxd_list: "theme-mindfuck"
-      trakt_extra_1: "https://trakt.tv/users/hdlists/lists/mindfuck-movies"
 
   Paranormal:
     schedule: *sched
@@ -70,7 +69,6 @@ collections:
       <<: *tmpl
       keyword: "philosophy"
       letterboxd_list: "theme-philosophical"
-      trakt_extra_1: "https://trakt.tv/users/rizreflects/lists/philosophical"
 
   Politics:
     schedule: *sched

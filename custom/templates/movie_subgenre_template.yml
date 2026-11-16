@@ -8,7 +8,7 @@ templates:
     delete_not_scheduled: false
     limit: 250
     #sort_title: "+130_<<collection_name>>"
-    sync_mode: sync
+    sync_mode: append # build_collection: false only supports append
     visible_home: <<visible_home>>
     visible_library: false
     visible_shared: <<visible_shared>>
@@ -43,12 +43,6 @@ templates:
         limit: <<letterboxd_list_details_limit_4>>
       - url: <<letterboxd_list_details_url_5>>
         limit: <<letterboxd_list_details_limit_5>>
-    trakt_list:
-      - <<trakt_extra_1>>
-      - <<trakt_extra_2>>
-      - <<trakt_extra_3>>
-      - <<trakt_extra_4>>
-      - <<trakt_extra_5>>
     optional:
       - genre
       - genre.any
@@ -69,10 +63,5 @@ templates:
       - letterboxd_list_details_limit_3
       - letterboxd_list_details_limit_4
       - letterboxd_list_details_limit_5
-      - trakt_extra_1
-      - trakt_extra_2
-      - trakt_extra_3
-      - trakt_extra_4
-      - trakt_extra_5
     item_genre: <<collection_name>>
     build_collection: false
