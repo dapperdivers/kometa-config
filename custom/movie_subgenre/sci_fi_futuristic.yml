@@ -95,7 +95,6 @@ collections:
       <<: *tmpl
       keyword: "outer-space,space-travel"
       letterboxd_list: "theme-outer-space"
-      trakt_extra_1: "https://trakt.tv/users/hdlists/lists/outer-space-space-exploration-movies"
 
   Space Opera:
     schedule: *sched
@@ -118,7 +117,6 @@ collections:
       <<: *tmpl
       keyword: "time-travel"
       letterboxd_list: "theme-time-travel"
-      trakt_extra_1: "https://trakt.tv/users/rizreflects/lists/time-travel"
 
   Utopia:
     schedule: *sched

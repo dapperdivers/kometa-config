@@ -21,7 +21,6 @@ gh api "repos/Kometa-Team/Kometa/git/trees/nightly?recursive=1" \
 |---------|--------------------|-------|
 | Plex | `builders/plex/` | `all`, `search`, `smart-filter`, `collectionless`, `watchlist`, `pilots`; `search-options` + `sort-options` reference pages |
 | TMDb | `builders/tmdb/` | charts (`now-playing`, `popular`, `airing-today`, …), lists, collections, people |
-| Trakt | `builders/trakt/` | user lists, charts, watchlist, recommendations |
 | IMDb | `builders/imdb/` | `chart`, `list`, `search`, `award`, `watchlist`, `id` |
 | Letterboxd | `builders/letterboxd/` | `list`, `user_films`, `user_reviews` |
 | MDbList | `builders/mdblist/` | `list` |

@@ -177,7 +177,6 @@ The configuration integrates with multiple services requiring API keys:
 
 - **Plex**: Media server (`<<PLEX_HOST>>`, `<<PLEX_API_KEY>>`)
 - **TMDb**: Movie/TV metadata (`<<TMDB_API_KEY>>`)
-- **Trakt**: Collection and list data (`<<TRAKT_CLIENT_ID>>`, etc.)
 - **Radarr/Sonarr**: Media management (`<<RADARR_HOST>>`, `<<SONARR_HOST>>`)
 - **Tautulli**: Plex statistics (`<<TAUTULLI_HOST>>`)
 - **OMDb**: Additional metadata (`<<OMDB_API_KEY>>`)

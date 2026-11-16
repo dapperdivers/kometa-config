@@ -20,7 +20,6 @@ gh api "repos/Kometa-Team/Kometa/git/trees/nightly?recursive=1" \
 |---------|----------|--------------------------------------|
 | Plex | `config/plex/` | `<<PLEX_HOST>>`, `<<PLEX_API_KEY>>` |
 | TMDb | `config/tmdb/` | `<<TMDB_API_KEY>>` |
-| Trakt | `config/trakt/` | `<<TRAKT_CLIENT_ID>>`, … (OAuth block) |
 | Radarr | `config/radarr/` | `<<RADARR_HOST>>` (+ token) |
 | Sonarr | `config/sonarr/` | `<<SONARR_HOST>>` (+ token) |
 | Tautulli | `config/tautulli/` | `<<TAUTULLI_HOST>>` |
